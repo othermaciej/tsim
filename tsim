@@ -1,3 +1,57 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
-print "Tyrant Combat Simulator v0.0"
+from xml.dom.minidom import parse
+
+
+cards = []
+
+class Card:
+    "A Tyrant card"
+    def __init__(self, name, type):
+        self._name = name
+        self._type = type
+
+    def type(self):
+        return self._type
+
+    def name(self):
+        return self._name
+
+def printCards(label, cardList):
+    print label + ": " + str(len(cardList))
+    for card in cardList:
+        print "    " + card.name()
+
+def main():
+    print "Tyrant Combat Simulator v0.0"
+    document = parse("cards.xml")
+    for node in document.documentElement.childNodes:
+        if node.nodeName == "unit":
+            name = node.getElementsByTagName("name")[0].firstChild.data
+            type = ""
+            if node.getElementsByTagName("set").length == 0:
+                continue
+            if node.getElementsByTagName("health").length == 0:
+                type = "action"
+            elif node.getElementsByTagName("attack").length == 0:
+                type = "structure"
+            elif node.getElementsByTagName("cost").length == 0:
+                type = "commander"
+            else:
+                type = "assault"
+
+            card = Card(name, type)
+            cards.append(card)
+
+    commanderCards = [card for card in cards if card.type() == "commander"]
+    assaultCards = [card for card in cards if card.type() == "assault"]
+    structureCards = [card for card in cards if card.type() == "structure"]
+    actionCards = [card for card in cards if card.type() == "action"]
+
+    printCards("Commander Cards", commanderCards)
+    printCards("Assault Cards", assaultCards)
+    printCards("Structure Cards", structureCards)
+    printCards("Action Cards", actionCards)
+
+
+main()

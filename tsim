@@ -101,8 +101,7 @@ def extract_numeric_field(node, name):
         return field;
     return atoi(field)
 
-def main():
-    print "Tyrant Combat Simulator v0.0"
+def parse_card_file():
     document = parse("cards.xml")
     for node in document.documentElement.childNodes:
         if node.nodeName == "unit":
@@ -143,5 +142,8 @@ def main():
     print_cards("Structure Cards", structureCards)
     print_cards("Action Cards", actionCards)
 
+def main():
+    print "Tyrant Combat Simulator v0.0"
+    parse_card_file()
 
 main()

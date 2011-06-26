@@ -2,14 +2,43 @@
 
 from xml.dom.minidom import parse
 from string import atoi
+from string import join
 
 cards = []
 
+class Skill:
+    "A Tyrant card skill"
+    def __init__(self, name, value, all, target_faction):
+        self._name = name
+        self._value = value
+        self._all = all
+        self._target_faction = target_faction
+
+    def name(self):
+        return self._name
+
+    def value(self):
+        return self._value
+
+    def all(self):
+        return self._all
+
+    def target_faction(self):
+        return self._target_faction
+
+    def description(self):
+        description = self.name()
+        description += " All" if self.all() else ""
+        description += " " + self.target_faction() if self.target_faction() != None else ""
+        description += " " + self.value() if self.value() != None else ""
+        return description
+
 class Card:
     "A Tyrant card"
-    def __init__(self, name, type, skills):
+    def __init__(self, name, faction, type, skills):
         self._name = name
         self._type = type
+        self._faction = faction
         self._skills = skills
 
     def type(self):
@@ -18,27 +47,30 @@ class Card:
     def name(self):
         return self._name
 
-    def skills(self):
-        return self._skill
+    def faction(self):
+        return self._faction
 
-    def skillDescription(self):
-        return ""
+    def skills(self):
+        return self._skills
+
+    def skill_description(self):
+        return join([skill.description() for skill in self.skills()], " ")
 
     def description(self):
         return self.name()
 
 class ActionCard(Card):
     "A Tyrant action card"
-    def __init__(self, name, skills):
-        Card.__init__(self, name, "action", skills)
+    def __init__(self, name, faction, skills):
+        Card.__init__(self, name, faction, "action", skills)
 
     def description(self):
-        return self.name() + " [" + self.skillDescription() + "]"
+        return self.name() + "  [" + self.skill_description() + "]"
 
 class AssaultCard(Card):
     "A Tyrant assault card"
-    def __init__(self, name, health, attack, delay, skills):
-        Card.__init__(self, name, "assault", skills)
+    def __init__(self, name, faction, health, attack, delay, skills):
+        Card.__init__(self, name, faction, "assault", skills)
         self._health = health
         self._attack = attack
         self._delay = delay
@@ -53,24 +85,24 @@ class AssaultCard(Card):
         return self._delay
 
     def description(self):
-        return self.name() + " [" + str(self.health()) + "hp " + str(self.attack()) + "atk / " + str(self.delay()) + " drop" + self.skillDescription() + "]"
+        return self.name() + " (" + str(self.faction()) + ")  [" + str(self.health()) + "hp " + str(self.attack()) + "atk / " + str(self.delay()) + " | " + self.skill_description() + "]"
 
 class CommanderCard(Card):
     "A Tyrant commander card"
-    def __init__(self, name, health, skills):
-        Card.__init__(self, name, "commander", skills)
+    def __init__(self, name, faction, health, skills):
+        Card.__init__(self, name, faction, "commander", skills)
         self._health = health
 
     def health(self):
         return self._health
 
     def description(self):
-        return self.name() + " [" + str(self.health()) + "hp" + self.skillDescription() + "]"
+        return self.name() + " (" + str(self.faction()) + ")  [" + str(self.health()) + "hp | " + self.skill_description() + "]"
 
 class StructureCard(Card):
     "A Tyrant structure card"
-    def __init__(self, name, health, delay, skills):
-        Card.__init__(self, name, "structure", skills)
+    def __init__(self, name, faction, health, delay, skills):
+        Card.__init__(self, name, faction, "structure", skills)
         self._health = health
         self._delay = delay
 
@@ -81,7 +113,7 @@ class StructureCard(Card):
         return self._delay
 
     def description(self):
-        return self.name() + " [" + str(self.health()) + "hp / " + str(self.delay()) + " drop"  + self.skillDescription() + "]"
+        return self.name() + " (" + str(self.faction()) + ")  [" + str(self.health()) + "hp / " + str(self.delay()) + " | "  + self.skill_description() + "]"
 
 
 def print_cards(label, cardList):
@@ -101,6 +133,38 @@ def extract_numeric_field(node, name):
         return field;
     return atoi(field)
 
+def type_code_to_faction(type_code):
+    if type_code == 1:
+        return "Imperial"
+    elif type_code == 3:
+        return "Bloodthirsty"
+    elif type_code == 4:
+        return "Xeno"
+    elif type_code == 9:
+        return "Raider"
+    else:
+        return None
+
+def extract_faction_field(node, name):
+    field = extract_numeric_field(node, name)
+    if field == None:
+        return field;
+    return type_code_to_faction(field)
+
+def parse_skill_node(node):
+    name = node.getAttribute("id").capitalize()
+    value = node.getAttribute("x")
+    value = value if value != "" else None
+    all = node.getAttribute("all") != ""
+    target_faction_type_code = node.getAttribute("y")
+    target_faction = type_code_to_faction(atoi(target_faction_type_code)) if target_faction_type_code != "" else None
+
+    return Skill(name, value, all, target_faction)
+
+def extract_skills(node, name):
+    nodeList = node.getElementsByTagName(name)
+    return [parse_skill_node(skill_node) for skill_node in nodeList]
+
 def parse_card_file():
     document = parse("cards.xml")
     for node in document.documentElement.childNodes:
@@ -110,25 +174,25 @@ def parse_card_file():
             attack = extract_numeric_field(node, "attack")
             delay = extract_numeric_field(node, "cost")
             set = extract_field(node, "set")
-
-            skills = []
+            faction = extract_faction_field(node, "type")
+            skills = extract_skills(node, "skill")
 
             if set == None:
                 # Not a real card
                 continue
             if health == None:
                 # Actions are the only cards that have no health
-                card = ActionCard(name, skills)
+                card = ActionCard(name, faction, skills)
             elif attack == None and delay != None:
                 # Commanders for some reason show up as attack 0 but structures have no attack
                 # Also check cost just in case
-                card = StructureCard(name, health, delay, skills)
+                card = StructureCard(name, faction, health, delay, skills)
             elif delay == None and health != None:
                 # Commanders have no delay but unlike actions have health
-                card = CommanderCard(name, health, skills)
+                card = CommanderCard(name, faction, health, skills)
             else:
                 # If it's notanything else, it's an assault card
-                card = AssaultCard(name, health, attack, delay, skills)
+                card = AssaultCard(name, faction, health, attack, delay, skills)
 
             cards.append(card)
 

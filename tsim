@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 from xml.dom.minidom import parse
-
+from string import atoi
 
 cards = []
 
 class Card:
     "A Tyrant card"
-    def __init__(self, name, type):
+    def __init__(self, name, type, skills):
         self._name = name
         self._type = type
+        self._skills = skills
 
     def type(self):
         return self._type
@@ -17,30 +18,119 @@ class Card:
     def name(self):
         return self._name
 
-def printCards(label, cardList):
+    def skills(self):
+        return self._skill
+
+    def skillDescription(self):
+        return ""
+
+    def description(self):
+        return self.name()
+
+class ActionCard(Card):
+    "A Tyrant action card"
+    def __init__(self, name, skills):
+        Card.__init__(self, name, "action", skills)
+
+    def description(self):
+        return self.name() + " [" + self.skillDescription() + "]"
+
+class AssaultCard(Card):
+    "A Tyrant assault card"
+    def __init__(self, name, health, attack, delay, skills):
+        Card.__init__(self, name, "assault", skills)
+        self._health = health
+        self._attack = attack
+        self._delay = delay
+
+    def health(self):
+        return self._health
+
+    def attack(self):
+        return self._attack
+
+    def delay(self):
+        return self._delay
+
+    def description(self):
+        return self.name() + " [" + str(self.health()) + "hp " + str(self.attack()) + "atk / " + str(self.delay()) + " drop" + self.skillDescription() + "]"
+
+class CommanderCard(Card):
+    "A Tyrant commander card"
+    def __init__(self, name, health, skills):
+        Card.__init__(self, name, "commander", skills)
+        self._health = health
+
+    def health(self):
+        return self._health
+
+    def description(self):
+        return self.name() + " [" + str(self.health()) + "hp" + self.skillDescription() + "]"
+
+class StructureCard(Card):
+    "A Tyrant structure card"
+    def __init__(self, name, health, delay, skills):
+        Card.__init__(self, name, "structure", skills)
+        self._health = health
+        self._delay = delay
+
+    def health(self):
+        return self._health
+
+    def delay(self):
+        return self._delay
+
+    def description(self):
+        return self.name() + " [" + str(self.health()) + "hp / " + str(self.delay()) + " drop"  + self.skillDescription() + "]"
+
+
+def print_cards(label, cardList):
     print label + ": " + str(len(cardList))
     for card in cardList:
-        print "    " + card.name()
+        print "    " + card.description()
+
+def extract_field(node, name):
+    nodeList = node.getElementsByTagName(name)
+    if nodeList.length == 0:
+        return None
+    return nodeList[0].firstChild.data
+
+def extract_numeric_field(node, name):
+    field = extract_field(node, name)
+    if field == None:
+        return field;
+    return atoi(field)
 
 def main():
     print "Tyrant Combat Simulator v0.0"
     document = parse("cards.xml")
     for node in document.documentElement.childNodes:
         if node.nodeName == "unit":
-            name = node.getElementsByTagName("name")[0].firstChild.data
-            type = ""
-            if node.getElementsByTagName("set").length == 0:
-                continue
-            if node.getElementsByTagName("health").length == 0:
-                type = "action"
-            elif node.getElementsByTagName("attack").length == 0:
-                type = "structure"
-            elif node.getElementsByTagName("cost").length == 0:
-                type = "commander"
-            else:
-                type = "assault"
+            name = extract_field(node, "name")
+            health = extract_numeric_field(node, "health")
+            attack = extract_numeric_field(node, "attack")
+            delay = extract_numeric_field(node, "cost")
+            set = extract_field(node, "set")
 
-            card = Card(name, type)
+            skills = []
+
+            if set == None:
+                # Not a real card
+                continue
+            if health == None:
+                # Actions are the only cards that have no health
+                card = ActionCard(name, skills)
+            elif attack == None and delay != None:
+                # Commanders for some reason show up as attack 0 but structures have no attack
+                # Also check cost just in case
+                card = StructureCard(name, health, delay, skills)
+            elif delay == None and health != None:
+                # Commanders have no delay but unlike actions have health
+                card = CommanderCard(name, health, skills)
+            else:
+                # If it's notanything else, it's an assault card
+                card = AssaultCard(name, health, attack, delay, skills)
+
             cards.append(card)
 
     commanderCards = [card for card in cards if card.type() == "commander"]
@@ -48,10 +138,10 @@ def main():
     structureCards = [card for card in cards if card.type() == "structure"]
     actionCards = [card for card in cards if card.type() == "action"]
 
-    printCards("Commander Cards", commanderCards)
-    printCards("Assault Cards", assaultCards)
-    printCards("Structure Cards", structureCards)
-    printCards("Action Cards", actionCards)
+    print_cards("Commander Cards", commanderCards)
+    print_cards("Assault Cards", assaultCards)
+    print_cards("Structure Cards", structureCards)
+    print_cards("Action Cards", actionCards)
 
 
 main()

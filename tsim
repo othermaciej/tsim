@@ -4,8 +4,6 @@ from xml.dom.minidom import parse
 from string import atoi
 from string import join
 
-cards = []
-
 class Skill:
     "A Tyrant card skill"
     def __init__(self, name, value, all, target_faction):
@@ -115,7 +113,6 @@ class StructureCard(Card):
     def description(self):
         return self.name() + " (" + str(self.faction()) + ")  [" + str(self.health()) + "hp / " + str(self.delay()) + " | "  + self.skill_description() + "]"
 
-
 def print_cards(label, cardList):
     print label + ": " + str(len(cardList))
     for card in cardList:
@@ -165,49 +162,52 @@ def extract_skills(node, name):
     nodeList = node.getElementsByTagName(name)
     return [parse_skill_node(skill_node) for skill_node in nodeList]
 
-def parse_card_file():
-    document = parse("cards.xml")
-    for node in document.documentElement.childNodes:
-        if node.nodeName == "unit":
-            name = extract_field(node, "name")
-            health = extract_numeric_field(node, "health")
-            attack = extract_numeric_field(node, "attack")
-            delay = extract_numeric_field(node, "cost")
-            set = extract_field(node, "set")
-            faction = extract_faction_field(node, "type")
-            skills = extract_skills(node, "skill")
+def parse_unit(node):
+    name = extract_field(node, "name")
+    health = extract_numeric_field(node, "health")
+    attack = extract_numeric_field(node, "attack")
+    delay = extract_numeric_field(node, "cost")
+    set = extract_field(node, "set")
+    faction = extract_faction_field(node, "type")
+    skills = extract_skills(node, "skill")
 
-            if set == None:
-                # Not a real card
-                continue
-            if health == None:
-                # Actions are the only cards that have no health
-                card = ActionCard(name, faction, skills)
-            elif attack == None and delay != None:
-                # Commanders for some reason show up as attack 0 but structures have no attack
-                # Also check cost just in case
-                card = StructureCard(name, faction, health, delay, skills)
-            elif delay == None and health != None:
-                # Commanders have no delay but unlike actions have health
-                card = CommanderCard(name, faction, health, skills)
-            else:
-                # If it's notanything else, it's an assault card
-                card = AssaultCard(name, faction, health, attack, delay, skills)
+    if set == None:
+        # Not a real card
+        return None
+    if health == None:
+        # Actions are the only cards that have no health
+        return ActionCard(name, faction, skills)
+    elif attack == None and delay != None:
+        # Commanders for some reason show up as attack 0 but structures have no attack
+        # Also check cost just in case
+        return StructureCard(name, faction, health, delay, skills)
+    elif delay == None and health != None:
+        # Commanders have no delay but unlike actions have health
+        return CommanderCard(name, faction, health, skills)
+    else:
+        # If it's notanything else, it's an assault card
+        return AssaultCard(name, faction, health, attack, delay, skills)
 
-            cards.append(card)
 
-    commanderCards = [card for card in cards if card.type() == "commander"]
-    assaultCards = [card for card in cards if card.type() == "assault"]
-    structureCards = [card for card in cards if card.type() == "structure"]
-    actionCards = [card for card in cards if card.type() == "action"]
+class CardCollection:
+    def __init__(self, filename):
+        document = parse(filename)
+        self._cards = [parse_unit(node) for node in document.documentElement.childNodes if node.nodeName == "unit" and extract_field(node, "set") != None]
 
-    print_cards("Commander Cards", commanderCards)
-    print_cards("Assault Cards", assaultCards)
-    print_cards("Structure Cards", structureCards)
-    print_cards("Action Cards", actionCards)
+    def dump(self):
+        commanderCards = [card for card in self._cards if card.type() == "commander"]
+        assaultCards = [card for card in self._cards if card.type() == "assault"]
+        structureCards = [card for card in self._cards if card.type() == "structure"]
+        actionCards = [card for card in self._cards if card.type() == "action"]
+
+        print_cards("Commander Cards", commanderCards)
+        print_cards("Assault Cards", assaultCards)
+        print_cards("Structure Cards", structureCards)
+        print_cards("Action Cards", actionCards)
 
 def main():
     print "Tyrant Combat Simulator v0.0"
-    parse_card_file()
+    cards = CardCollection("cards.xml")
+    cards.dump()
 
 main()

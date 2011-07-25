@@ -4,15 +4,21 @@ from string import atoi
 
 from tyrant.card_collection import CardCollection
 from tyrant.deck import Deck
-
+from tyrant.battle import Battle
 
 def main():
     print "Tyrant Combat Simulator v0.0"
     collection = CardCollection("cards.xml")
-    collection.dump()
-    deck1 = Deck("Thadius_II.deck", collection)
+    deck1 = Deck("Test_imp.deck", collection)
     deck1.dump()
-    deck2 = Deck("Freddie_II.deck", collection)
+    deck2 = Deck("Test_Raider.deck", collection)
     deck2.dump()
+    battle = Battle(deck1, deck2, False)
+    offense_won = battle.simulate()
+    if offense_won:
+        print "Victory for OFFENSE"
+    else:
+        print "Victory for DEFENSE"
+
 
 main()

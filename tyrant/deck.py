@@ -54,3 +54,8 @@ class Deck:
         print_cards("Commander", [self._commander], False)
         print_cards("Units", self._cards, False)
 
+    def commander(self):
+        return self._commander
+
+    def cards(self):
+        return self._cards

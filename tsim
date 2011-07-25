@@ -308,7 +308,9 @@ def main():
     print "Tyrant Combat Simulator v0.0"
     collection = CardCollection("cards.xml")
     collection.dump()
-    deck = Deck("Thadius_II.deck", collection)
-    deck.dump()
+    deck1 = Deck("Thadius_II.deck", collection)
+    deck1.dump()
+    deck2 = Deck("Freddie_II.deck", collection)
+    deck2.dump()
 
 main()

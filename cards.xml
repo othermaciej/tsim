@@ -14,6 +14,7 @@
 		<attack>1</attack>
 		<health>2</health>
 		<cost>0</cost>
+		<reserve>2</reserve>
 		<rarity>1</rarity> <gold_cost>200</gold_cost>
 		<type>1</type>
 		<set>1000</set>
@@ -26,6 +27,7 @@
 		<attack>2</attack>
 		<health>2</health>
 		<cost>1</cost>
+		<reserve>2</reserve>
 		<rarity>1</rarity> <gold_cost>200</gold_cost>
 		<type>1</type>
 		<set>1000</set>
@@ -1528,6 +1530,7 @@
 		<picture>boris.jpg</picture>
 		<attack>0</attack>
 		<health>8</health>
+		<reserve>1</reserve>
 		<rarity>1</rarity> <gold_cost>10000</gold_cost>
 		<type>1</type>
 		<set>5000</set>
@@ -1539,6 +1542,7 @@
 		<picture>butcher.jpg</picture>
 		<attack>0</attack>
 		<health>9</health>
+		<reserve>1</reserve>
 		<rarity>1</rarity> <gold_cost>100</gold_cost>
 		<type>3</type>
 		<set>5000</set>
@@ -1550,6 +1554,7 @@
 		<picture>dutch.jpg</picture>
 		<attack>0</attack>
 		<health>12</health>
+		<reserve>1</reserve>
 		<rarity>2</rarity> <gold_cost>1000</gold_cost>
 		<skill id='rally' x='1' y='1' />
 		<type>1</type>
@@ -1562,6 +1567,7 @@
 		<picture>zombie.jpg</picture>
 		<attack>0</attack>
 		<health>11</health>
+		<reserve>1</reserve>
 		<rarity>2</rarity> <gold_cost>1000</gold_cost>
 		<skill id='heal' x='1' y='3' />
 		<type>3</type>
@@ -1574,6 +1580,7 @@
 		<picture>jabbers.jpg</picture>
 		<attack>0</attack>
 		<health>10</health>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>5000</gold_cost>
 		<skill id='rally' x='1' y='9' />
 		<skill id='weaken' x='1' y='4' />
@@ -2687,6 +2694,7 @@
 		<health>5</health>
 		<cost>2</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='flying' />
 		<skill id='counter' x='2' />
@@ -2702,6 +2710,7 @@
 		<health>7</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 		<skill id='siphon' x='3' />
 		<type>3</type>
@@ -2716,6 +2725,7 @@
 		<health>3</health>
 		<cost>1</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 		<skill id='strike' x='1' />
 		<skill id='antiair' x='1' />
@@ -2733,6 +2743,7 @@
 		<health>4</health>
 		<cost>1</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity>
 		<skill id='mimic' />
 		<type>3</type>
@@ -2747,6 +2758,7 @@
 		<health>4</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity>
 		<skill id='armored' x='2' />
 		<skill id='flurry' x='2' />
@@ -2763,6 +2775,7 @@
 		<health>10</health>
 		<cost>4</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity>
 		<skill id='antiair' x='3' />
 		<skill id='immobilize' />
@@ -2782,6 +2795,7 @@
 		<health>1</health>
 		<cost>1</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='strike' x='1' />
 		<type>9</type>
@@ -2796,6 +2810,7 @@
 		<health>2</health>
 		<cost>2</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='flying' />
 		<skill id='heal' x='3' />
@@ -2811,6 +2826,7 @@
 		<health>5</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='flying' />
 		<skill id='strike' x='1' all='1' />
@@ -2825,6 +2841,7 @@
 		<picture>hellfire.jpg</picture>
 		<attack>0</attack>
 		<health>16</health>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<type>9</type>
 		<set>5000</set>
@@ -2838,6 +2855,7 @@
 		<health>4</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 		<skill id='counter' x='2' />
 		<skill id='regenerate' x='2' />
@@ -2853,6 +2871,7 @@
 		<health>3</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 		<skill id='armored' x='2' />
 		<skill id='crush' x='2' />
@@ -2868,6 +2887,7 @@
 		<health>3</health>
 		<cost>2</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity>
 		<skill id='evade' />
 		<skill id='jam' />
@@ -2950,6 +2970,7 @@
 		<health>6</health>
 		<cost>4</cost>
 		<skill id='flurry' x='3' />
+		<reserve>1</reserve>
 		<rarity>2</rarity> <gold_cost>2500</gold_cost>
 		<type>1</type>
 		<set>2</set>
@@ -3028,8 +3049,9 @@
 		<attack>3</attack>
 		<health>2</health>
 		<cost>2</cost>
-		<skill id='flurry' x='1' />
+		<reserve>1</reserve>
 		<rarity>1</rarity> <gold_cost>200</gold_cost>
+		<skill id='flurry' x='1' />
 		<type>9</type>
 		<set>2</set>
 	</unit>
@@ -3041,8 +3063,9 @@
 		<attack>4</attack>
 		<health>4</health>
 		<cost>4</cost>
-		<skill id='crush' x='4' />
+		<reserve>1</reserve>
 		<rarity>1</rarity> <gold_cost>200</gold_cost>
+		<skill id='crush' x='4' />
 		<type>9</type>
 		<set>2</set>
 	</unit>
@@ -3054,6 +3077,7 @@
 		<attack>1</attack>
 		<health>3</health>
 		<cost>1</cost>
+		<reserve>1</reserve>
 		<rarity>1</rarity> <gold_cost>10000</gold_cost>
 		<skill id='counter' x='2' />
 		<skill id='antiair' x='1' />
@@ -3082,10 +3106,11 @@
 		<attack>1</attack>
 		<health>4</health>
 		<cost>3</cost>
+		<reserve>1</reserve>
+		<rarity>2</rarity> <gold_cost>200</gold_cost>
 		<skill id='evade' />
 		<skill id='armored' x='1' />
 		<skill id='strike' x='2' y='1' />
-		<rarity>2</rarity> <gold_cost>200</gold_cost>
 		<type>9</type>
 		<set>2</set>
 	</unit>
@@ -3097,9 +3122,10 @@
 		<attack>1</attack>
 		<health>4</health>
 		<cost>2</cost>
+		<reserve>1</reserve>
+		<rarity>2</rarity> <gold_cost>2500</gold_cost>
 		<skill id='rally' x='2' y='9' />
 		<skill id='flurry' x='1' />
-		<rarity>2</rarity> <gold_cost>2500</gold_cost>
 		<type>9</type>
 		<set>2</set>
 	</unit>
@@ -3235,6 +3261,7 @@
 		<skill id='evade' />
 		<skill id='rally' x='2' y='3' />
 		<skill id='crush' x='3' />
+		<reserve>1</reserve>
 		<rarity>2</rarity> <gold_cost>2500</gold_cost>
 		<type>3</type>
 		<set>2</set>
@@ -3380,6 +3407,7 @@
 		<attack>7</attack>
 		<health>4</health>
 		<cost>4</cost>
+		<reserve>1</reserve>
 		<rarity>2</rarity> <gold_cost>10000</gold_cost>
 		<type>4</type>
 		<set>2</set>
@@ -3626,6 +3654,7 @@
 		<health>8</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 		<skill id='evade' />
 		<skill id='rally' x='3' y='9' />
@@ -3641,10 +3670,11 @@
 		<health>6</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
-		<skill id='antiair' x='2' />
 		<skill id='heal' x='1' all='1' />
 		<skill id='siege' x='2' />
+		<skill id='antiair' x='2' />
 		<type>1</type>
 		<set>5000</set>
 	</unit>
@@ -3655,6 +3685,7 @@
 		<picture>xaedan.jpg</picture>
 		<attack>0</attack>
 		<health>13</health>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 		<skill id='heal' x='1' y='4' />
 		<skill id='weaken' x='1' y='3'  />
@@ -3670,6 +3701,7 @@
 		<health>5</health>
 		<cost>2</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity>
 		<skill id='flurry' x='1' />
 		<skill id='poison' x='2' />
@@ -4590,6 +4622,7 @@
 		<health>5</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='armored' x='1' />
 		<skill id='swipe' />
@@ -4606,6 +4639,7 @@
 		<health>4</health>
 		<cost>2</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='flying' />
 		<skill id='antiair' x='2' />
@@ -4621,6 +4655,7 @@
 		<health>6</health>
 		<cost>4</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='payback' />
 		<skill id='weaken' x='3' />
@@ -4634,6 +4669,7 @@
 		<picture>tartaruslord.jpg</picture>
 		<attack>0</attack>
 		<health>12</health>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>100</gold_cost>
 		<skill id='heal' x='1' y='3' />
 		<skill id='rally' x='1' y='3' />
@@ -4653,6 +4689,7 @@
 		<health>5</health>
 		<cost>2</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='evade' />
 		<skill id='enfeeble' x='2' />
@@ -4668,6 +4705,7 @@
 		<health>9</health>
 		<cost>4</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='rally' x='1' all='1' />
 		<type>1</type>
@@ -4682,6 +4720,7 @@
 		<health>4</health>
 		<cost>2</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='payback' />
 		<skill id='regenerate' x='2' />
@@ -4697,6 +4736,7 @@
 		<health>6</health>
 		<cost>3</cost>
 		<unique>1</unique>
+		<reserve>1</reserve>
 		<rarity>3</rarity> <gold_cost>1000</gold_cost>
 		<skill id='armored' x='2' />
 		<skill id='enfeeble' x='1' />
@@ -5804,12 +5844,75 @@
 	</unit>
 	
 	<!-- END BLOCK 7 -->
+	
+	<!-- Block 8 - Imperial -->
+	
+	<unit> 
+		<id>311</id>
+		<name>Metalhead</name>
+		<picture>leatherhead.jpg</picture>
+		<attack>2</attack>
+		<health>5</health>
+		<cost>3</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='armored' x='2' />
+		<skill id='siege' x='2' />
+		<skill id='flurry' x='1' />
+		<type>1</type>
+		<set>5001</set>
+	</unit>
+	
+	<unit> 
+		<id>312</id>
+		<name>Splinterwing</name>
+		<picture>splinterwing.jpg</picture>
+		<attack>2</attack>
+		<health>4</health>
+		<cost>2</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='flying' />
+		<skill id='weaken' x='2' />
+		<type>1</type>
+		<set>5001</set>
+	</unit>
+	
+	<unit>
+		<id>2059</id>
+		<name>Unstable Dynamo</name>
+		<picture>unstoppabledynamo.jpg</picture>
+		<health>8</health>
+		<cost>4</cost>
+		<rarity>3</rarity>
+		<skill id='jam' />
+		<skill id='siege' x='3' />
+		<skill id='mimic' />
+		<type>1</type>
+		<set>5001</set>
+	</unit>
+	
+	<!-- END Block 8 -->
 
 <!-- END WAITLISTED SET -->
-
+	<!-- Distraction -->
+	
 	<unit>
-		<id>400</id>
-		<name>Distraction</name>
+		<id>410</id>
+		<name>T-46 Leonidas</name>
+		<picture>ironslug150.jpg</picture>
+		<attack>3</attack>
+		<health>6</health>
+		<cost>3</cost>
+		<unique>1</unique>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='armored' x='1' />
+		<skill id='strike' x='2' />
+		<type>1</type>
+		<set>9000</set>
+	</unit>
+	
+	<unit>
+		<id>411</id>
+		<name>Placeholder</name>
 		<picture>alex.jpg</picture>
 		<attack>1</attack>
 		<health>1</health>
@@ -5819,8 +5922,30 @@
 	</unit>
 	
 	<unit>
-		<id>1103</id>
-		<name>Distraction Commander</name>
+		<id>412</id>
+		<name>Placeholder</name>
+		<picture>alex.jpg</picture>
+		<attack>1</attack>
+		<health>1</health>
+		<cost>3</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>9</type>
+	</unit>
+	
+	<unit>
+		<id>425</id>
+		<name>Use This One</name>
+		<picture>alex.jpg</picture>
+		<attack>1</attack>
+		<health>1</health>
+		<cost>3</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>9</type>
+	</unit>
+	
+	<unit>
+		<id>1105</id>
+		<name>Use This One Commander</name>
 		<picture>alex.jpg</picture>
 		<attack>0</attack>
 		<health>1</health>
@@ -5829,8 +5954,8 @@
 	</unit>
 	
 	<unit>
-		<id>2076</id>
-		<name>Distraction Structure</name>
+		<id>2078</id>
+		<name>Use This One Structure</name>
 		<picture>alex.jpg</picture>
 		<health>1</health>
 		<cost>1</cost>
@@ -5839,8 +5964,8 @@
 	</unit>
 	
 	<unit>
-		<id>3039</id>
-		<name>Distraction Action</name>
+		<id>3041</id>
+		<name>Use This One Action</name>
 		<picture>alex.jpg</picture>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 	</unit>
@@ -5868,13 +5993,13 @@
 		<id>182</id>
 		<name>Fusion TEST</name>
 		<picture>alex.jpg</picture>
-		<attack>0</attack>
-		<health>15</health>
+		<attack>1</attack>
+		<health>5</health>
 		<cost>1</cost>
-		<skill id='rally' x='1' />
 		<skill id='fusion' />
+		<skill id='rally' x='1' />
 		<rarity>1</rarity> <gold_cost>10000</gold_cost>
-		<type>9</type>
+		<type>3</type>
 	</unit>
 	
 	<unit>
@@ -5882,8 +6007,7 @@
 		<name>Action Jackson: The Return</name>
 		<picture>alex.jpg</picture>
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
-		<skill id='recharge' />
-		<skill id='shock' x='2' />
+		<skill id='strike' x='1' all='1' />
 	</unit>
 	
 	<unit>
@@ -5892,8 +6016,10 @@
 		<picture>xdog.jpg</picture>
 		<attack>1</attack>
 		<health>15</health>
-		<cost>2</cost>
-		<skill id='jam' />
+		<cost>1</cost>
+		<skill id='strike' x='1' />
+		<skill id='counter' x='1' />
+		<skill id='berserk' x='1' />
 		<rarity>3</rarity> <gold_cost>10000</gold_cost>
 		<type>1</type> 
 	</unit>
@@ -6447,6 +6573,392 @@
 
 <!-- END RAIDS 6 DESIGN -->
 
+<!-- Raid 8 Design - Typhon -->
+
+	<unit>
+		<id>1008</id>
+		<name>Gore Typhon</name>
+		<picture>bloodtyphoncommander.jpg</picture>
+		<attack>0</attack>
+		<health>25</health>
+		<skill id='infuse' z='3' />
+		<skill id='heal' x='2' all='1' y='3' />
+		<skill id='rally' x='1' all='1' y='3' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>385</id>
+		<name>Typhon's Beast</name>
+		<picture>blighthound.jpg</picture>
+		<attack>1</attack>
+		<health>6</health>
+		<cost>3</cost>
+		<skill id='rally' x='1' y='3' all='1' />
+		<skill id='strike' x='1' y='3' all='1'  />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>386</id>
+		<name>Typhon's Grasp</name>
+		<picture>typhonclaw.jpg</picture>
+		<attack>2</attack>
+		<health>7</health>
+		<cost>3</cost>
+		<unique>1</unique>
+		<skill id='payback' />
+		<skill id='heal' x='2' y='3' all='1' />
+		<skill id='swipe' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>408</id>
+		<name>Blight Claw</name>
+		<picture>typhonfireclaw.jpg</picture>
+		<attack>3</attack>
+		<health>3</health>
+		<cost>2</cost>
+		<unique>1</unique>
+		<skill id='swipe' />
+		<skill id='pierce' x='2' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>387</id>
+		<name>Loyal Legion</name>
+		<picture>typhonguard.jpg</picture>
+		<attack>1</attack>
+		<health>5</health>
+		<cost>1</cost>
+		<skill id='antiair' x='2' />
+		<skill id='leech' x='2' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>9</type>
+	</unit>
+
+	<unit>
+		<id>393</id>
+		<name>Discharge Cannon</name>
+		<picture>typhonlightningarm.jpg</picture>
+		<attack>1</attack>
+		<health>7</health>
+		<cost>4</cost>
+		<unique>1</unique>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='evade' />
+		<skill id='enfeeble' x='1' all='1' y='3'/>
+		<skill id='jam' all='1' y='3'/>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>3039</id>
+		<name>Impale</name>
+		<picture>impalingspike.jpg</picture>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='strike' x='5' />
+	</unit>
+
+<!-- END Raid 8 Design -->
+
+<!-- Raid 9 Design - Behemoth -->
+
+	<unit>
+		<id>1016</id>
+		<name>Behemoth</name>
+		<picture>behemothcommander2.jpg</picture>
+		<attack>0</attack>
+		<health>25</health>
+		<skill id='enfeeble' x='1' />
+		<skill id='strike' x='1' />
+		<skill id='siege' x='1' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>3032</id>
+		<name>Smash</name>
+		<picture>crushingpaw.jpg</picture>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='strike' x='4' />
+		<skill id='shock' x='3' />
+		<skill id='recharge' />
+	</unit>
+
+	<unit>
+		<id>3033</id>
+		<name>Fireball</name>
+		<picture>firemouth.jpg</picture>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='strike' x='2' all='1' />
+		<skill id='shock' x='3' />
+		<skill id='recharge' />
+	</unit>
+
+	<unit>
+		<id>3034</id>
+		<name>Carapace Quake</name>
+		<picture>behemothcarapace.jpg</picture>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='weaken' x='2' all='1' />
+		<skill id='shock' x='4' />
+		<skill id='recharge' />
+	</unit>
+
+	<unit>
+		<id>402</id>
+		<name>Behemoth Pup</name>
+		<picture>behemothpup.jpg</picture>
+		<attack>4</attack>
+		<health>6</health>
+		<cost>3</cost>
+		<skill id='siege' x='3' />
+		<skill id='crush' x='3' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>403</id>
+		<name>Wild Leeches</name>
+		<picture>furleeches.jpg</picture>
+		<attack>2</attack>
+		<health>6</health>
+		<cost>2</cost>
+		<skill id='leech' x='2' />
+		<skill id='siphon' x='2' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>404</id>
+		<name>Bountiful Tick</name>
+		<picture>tick.jpg</picture>
+		<attack>1</attack>
+		<health>3</health>
+		<cost>1</cost>
+		<skill id='heal' x='1' all='1' y='3' />
+		<skill id='enfeeble' x='1' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+<!-- END Raid 9 Design -->
+
+<!-- Raid 10 Design - Mist BT -->
+
+	<unit>
+		<id>1001</id>
+		<name>Ectobrume</name>
+		<picture>aphablight.jpg</picture>
+		<attack>0</attack>
+		<health>20</health>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='mist' />
+		<skill id='enfeeble' x='1' all='1' />
+		<skill id='weaken' x='1' all='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>389</id>
+		<name>Shadow</name>
+		<picture>lashingbeast.jpg</picture>
+		<attack>2</attack>
+		<health>7</health>
+		<cost>3</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='payback' />
+		<skill id='counter' x='2' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>390</id>
+		<name>Bloodsucker</name>
+		<picture>vesperbat.jpg</picture>
+		<attack>1</attack>
+		<health>5</health>
+		<cost>2</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='flying' />
+		<skill id='counter' x='1' />
+		<skill id='poison' x='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>391</id>
+		<name>Mist Inhaler</name>
+		<picture>fogbeast.jpg</picture>
+		<attack>2</attack>
+		<health>8</health>
+		<cost>4</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='evade' />
+		<skill id='regenerate' x='3' />
+		<skill id='rally' x='3' y='3' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>2075</id>
+		<name>Haze Geyser</name>
+		<picture>foggeyser.jpg</picture>
+		<health>7</health>
+		<cost>3</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='heal' x='1' all='1' y='3' />
+		<skill id='enfeeble' x='2' />
+		<skill id='weaken' x='1' all='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>400</id>
+		<name>Tartarus Reaper</name>
+		<picture>betablight.jpg</picture>
+		<attack>4</attack>
+		<health>3</health>
+		<cost>2</cost>
+		<skill id='evade' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>401</id>
+		<name>Crazed Assailant</name>
+		<picture>lashingfreak.jpg</picture>
+		<attack>2</attack>
+		<health>6</health>
+		<cost>3</cost>
+		<skill id='flurry' x='1' />
+		<skill id='swipe' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+<!-- END Raid 10 Design -->
+
+<!-- Raid 11 Design - Flower Power -->
+
+	<unit>
+		<id>1103</id>
+		<name>Blightbloom</name>
+		<picture>tartarusflowercommander.jpg</picture>
+		<attack>0</attack>
+		<health>20</health>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='heal' x='2' y='3' all='1' />
+		<skill id='repair' x='1' all='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>392</id>
+		<name>Bloom</name>
+		<picture>blitzcreeper.jpg</picture>
+		<attack>1</attack>
+		<health>5</health>
+		<cost>1</cost>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='regenerate' x='2' />
+		<skill id='flurry' x='1' />
+		<skill id='siphon' x='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>2072</id>
+		<name>Corrosive Spores</name>
+		<picture>flowerpetal.jpg</picture>
+		<health>7</health>
+		<cost>2</cost>
+		<unique>1</unique>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='fusion' /> 
+		<skill id='weaken' x='1' all='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>2073</id>
+		<name>Thrashing Barbel</name>
+		<picture>flowertentacle.jpg</picture>
+		<health>9</health>
+		<cost>3</cost>
+		<unique>1</unique>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='fusion' />
+		<skill id='strike' x='1' all='1' />
+		<skill id='siege' x='1' all='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>2074</id>
+		<name>Rejuvenator</name>
+		<picture>flowerbase.jpg</picture>
+		<health>6</health>
+		<cost>2</cost>
+		<unique>1</unique>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='fusion' />
+		<skill id='heal' x='1' all='1' />
+		<skill id='repair' x='1' all='1' />
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>3040</id>
+		<name>Sunder</name>
+		<picture>blighttrap.jpg</picture>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='enfeeble' x='3' />
+		<skill id='strike' x='3' />
+		<skill id='weaken' x='3' />
+	</unit>
+
+	<unit>
+		<id>398</id>
+		<name>Sporscism</name>
+		<picture>creepersack.jpg</picture>
+		<attack>1</attack>
+		<health>4</health>
+		<cost>1</cost>
+		<skill id='counter' x='2' />
+		<skill id='poison' x='1' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+	<unit>
+		<id>399</id>
+		<name>Infected Spire</name>
+		<picture>scabbyrocks.jpg</picture>
+		<attack>3</attack>
+		<health>6</health>
+		<cost>3</cost>
+		<skill id='armored' x='2' />
+		<skill id='siphon' x='3' />
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<type>3</type>
+	</unit>
+
+<!--  END Raid 11 Design -->
+
+
+
 <!-- Raid Rewards -->
 
 	<unit> <!-- Kor Siege -->
@@ -6687,6 +7199,173 @@
 		<type>3</type>
 		<set>5000</set>
 	</unit>
+	
+	<!-- Blight Raids Rewards -->
+	
+	<unit>
+		<id>3038</id>
+		<name>Crippling Barrier</name>
+		<picture>barrier.jpg</picture>
+		<rarity>3</rarity> <gold_cost>12000</gold_cost>
+		<skill id='enfeeble' x='1' all='1' />
+		<skill id='jam' all='1' />
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>2076</id> 
+		<name>Haze Geyser</name>
+		<picture>foggeyser.jpg</picture>
+		<health>4</health>
+		<cost>3</cost>
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<skill id='enfeeble' x='2' />
+		<skill id='weaken' x='1' all='1' />
+		<type>3</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>2077</id>
+		<name>Drop Pod</name>
+		<picture>droppod.jpg</picture>
+		<health>5</health>
+		<cost>2</cost>
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<skill id='heal' x='2' />
+		<skill id='rally' x='1' />
+		<type>1</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>394</id>
+		<name>Salvager</name>
+		<picture>bloodraider.jpg</picture>
+		<attack>2</attack>
+		<health>5</health>
+		<cost>1</cost>
+		<skill id='heal' x='1' y='9' />
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<type>9</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>395</id>
+		<name>Photon Walker</name>
+		<picture>briskwalker.jpg</picture>
+		<attack>0</attack>
+		<health>6</health>
+		<cost>2</cost>
+		<skill id='rally' x='1' y='1' />
+		<skill id='valor' x='3' />
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<type>1</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>405</id>
+		<name>Gun Runner</name>
+		<picture>gunrunner.jpg</picture>
+		<attack>2</attack>
+		<health>6</health>
+		<cost>3</cost>
+		<skill id='regenerate' x='2'/>
+		<skill id='jam' />
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<type>1</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>396</id>
+		<name>Hydropod</name>
+		<picture>hovercrafttank.jpg</picture>
+		<attack>2</attack>
+		<health>7</health>
+		<cost>4</cost>
+		<skill id='armored' x='1' />
+		<skill id='strike' x='2' />
+		<skill id='valor' x='2' />
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<type>9</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>397</id>
+		<name>Xeno Overlord</name>
+		<picture>overlord.jpg</picture>
+		<attack>2</attack>
+		<health>6</health>
+		<cost>4</cost>
+		<unique>1</unique>
+		<skill id='flying' />
+		<skill id='strike' x='1' all='1' />
+		<skill id='swipe' />
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<type>4</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>409</id>
+		<name>Vengeful Remora</name>
+		<picture>vengefulremora.jpg</picture>
+		<attack>1</attack>
+		<health>6</health>
+		<cost>1</cost>
+		<skill id='payback'  />
+		<skill id='immobilize' />
+		<rarity>3</rarity> <gold_cost>15000</gold_cost>
+		<type>3</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>406</id>
+		<name>Bloodsucker</name>
+		<picture>vesperbat.jpg</picture>
+		<attack>1</attack>
+		<health>5</health>
+		<cost>2</cost>
+		<rarity>3</rarity> <gold_cost>12000</gold_cost>
+		<skill id='flying' />
+		<skill id='counter' x='1' />
+		<skill id='poison' x='1' />
+		<type>3</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>407</id>
+		<name>Blight Master</name>
+		<picture>blightmaster.jpg</picture>
+		<attack>2</attack>
+		<health>5</health>
+		<cost>3</cost>
+		<rarity>3</rarity> <gold_cost>12000</gold_cost>
+		<skill id='rally' x='3' y='3' />
+		<type>3</type>
+		<set>5000</set>
+	</unit>
+
+	<unit>
+		<id>1104</id>
+		<name>Stavros</name>
+		<picture>generalstavrose.jpg</picture>
+		<attack>0</attack>
+		<health>13</health>
+		<rarity>3</rarity> <gold_cost>12000</gold_cost>
+		<skill id='weaken' x='1' />
+		<skill id='siege' x='1' />
+		<type>9</type>
+		<set>5000</set>
+	</unit>
+	
+	<!--  END Blight Raid Rewards -->
 
 <!-- END Raid Store Rewards -->
 
@@ -6876,6 +7555,16 @@
 		<rarity>3</rarity> <gold_cost>50000</gold_cost>
 		<type>3</type>
 	</unit>
+	
+	<unit> <!-- Probably won't use -->
+		<id>3035</id>
+		<name>Infectious Blast</name>
+		<picture>alex.jpg</picture>
+		<rarity>3</rarity> <gold_cost>10000</gold_cost>
+		<skill id='enfeeble' x='1' all='1' /> <!-- Might change to Enfeeble 2 -->
+		<skill id='shock' x='2' />
+		<skill id='recharge' />
+	</unit>
 
 <!-- COPYCAT RAIDERS -->
 	
@@ -6915,7 +7604,7 @@
 	
 	<unit>
 		<id>504</id>
-		<name>Rumbler</name>
+		<name>Raider Rumbler</name>
 		<picture>raidertank.jpg</picture>
 		<attack>1</attack>
 		<health>1</health>
@@ -6958,9 +7647,9 @@
 		<name>TEST COMMANDER</name>
 		<picture>general1.jpg</picture>
 		<attack>0</attack>
-		<health>1</health>
+		<health>10</health>
 		<rarity>1</rarity> <gold_cost>1000</gold_cost>
-		<skill id='strike' x='1' />
+		<skill id='mist' />
 	</unit>
 
 	<unit> <!-- STORY COMMANDER -->
@@ -7031,6 +7720,42 @@
 		<sound>MachineGunSound</sound>
 	</skillType>
 	<skillType>
+		<id>wall</id>
+		<name>Wall</name>
+		<icon>WallSkillIcon</icon>
+		<target_anim>wallBuild.swf</target_anim>
+		<desc>Defensive - Absorbs damage dealt to the Commander and subtracts from own health</desc>
+		<sound>ArmoredSound</sound>
+		<cardValue passive='1' cost='2' />
+	</skillType>
+	<skillType>
+		<id>evade</id>
+		<name>Evade</name>
+		<icon>EvadeSkillIcon</icon>
+		<target_anim>evade.swf</target_anim>
+		<desc>Defensive - 50% chance to negate the effects of an enemy Activation skill to this</desc>
+		<sound>WeirdSound</sound>
+		<cardValue passive='1' cost='2' />
+	</skillType>
+	<skillType>
+		<id>payback</id>
+		<name>Payback</name>
+		<icon>PaybackSkillIcon</icon>
+		<anim>payback.swf</anim>
+		<desc>Defensive - When enemy uses an Activation skill on this (Other than Mimic), 50% chance to use same skill on the original enemy unit</desc>
+		<sound>WeirdSound</sound>
+		<cardValue passive='1' cost='2' />
+	</skillType>
+	<skillType>
+		<id>flying</id>
+		<name>Flying</name>
+		<icon>FlyingSkillIcon</icon>
+		<target_anim>flyingbonus.swf</target_anim>
+		<desc>Defensive - 50% chance to dodge attacks by non-Flying units</desc>
+		<sound>FlyingSound</sound>
+		<cardValue passive='1' cost='2.5' />
+	</skillType>
+	<skillType>
 		<id>armored</id>
 		<name>Armored</name>
 		<icon>ArmoredSkillIcon</icon>
@@ -7038,6 +7763,51 @@
 		<desc>Defensive - Reduces damage taken by attacks</desc>
 		<sound>ArmoredSound</sound>
 		<cardValue passive='1' cost='2.5' />
+	</skillType>
+	<skillType>
+		<id>counter</id>
+		<name>Counter</name>
+		<icon>CounterSkillIcon</icon>
+		<target_anim>spikeCounterAttack.swf</target_anim>
+		<desc>Defensive - When damaged by an attack, deal damage back to attacker</desc>
+		<sound>LeechSound</sound>
+		<cardValue passive='1' cost='2' />
+	</skillType>
+	<skillType>
+		<id>regenerate</id>
+		<name>Regenerate</name>
+		<icon>RegenerationSkillIcon</icon>
+		<anim>regenerate.swf</anim>
+		<desc>Defensive - When card health reaches zero, 50% chance of gaining back health</desc>
+		<sound>RegenSound</sound>
+		<cardValue passive='1' cost='3' />
+	</skillType>
+	<skillType>
+		<id>heal</id>
+		<name>Heal</name>
+		<icon>HealSkillIcon</icon>
+		<target_anim>increasehealth.swf</target_anim>
+		<desc>Activation - Increases health of a random allied Assault card</desc>
+		<sound>BoostSound</sound>
+		<cardValue cost='1.5' />
+	</skillType>
+	<skillType>
+		<id>rally</id>
+		<name>Rally</name>
+		<icon>RallySkillIcon</icon>
+		<target_anim>increaseattack.swf</target_anim>
+		<desc>Activation - Increases the Attack of a random allied Assault card</desc>
+		<sound>BoostSound</sound>
+		<cardValue cost='2.5' />
+	</skillType>
+	<skillType>
+		<id>enfeeble</id>
+		<name>Enfeeble</name>
+		<icon>EnfeebleSkillIcon</icon>
+		<target_anim>enfeeble.swf</target_anim>
+		<desc>Activation - Increases any damage directed at a random enemy Assault card</desc>
+		<sound>WeirdSound</sound>
+		<cardValue cost='2.5' />
 	</skillType>
 	<skillType>
 		<id>strike</id>
@@ -7059,22 +7829,59 @@
 		<cardValue cost='2.5' />
 	</skillType>
 	<skillType>
-		<id>heal</id>
-		<name>Heal</name>
-		<icon>HealSkillIcon</icon>
-		<target_anim>increasehealth.swf</target_anim>
-		<desc>Activation - Increases health of a random allied Assault card</desc>
-		<sound>BoostSound</sound>
+		<id>weaken</id>
+		<name>Weaken</name>
+		<icon>WeakenSkillIcon</icon>
+		<target_anim>weaken.swf</target_anim>
+		<desc>Activation - Reduce the attack of a random enemy Assault card</desc>
+		<sound>WeakenSound</sound>
+		<cardValue cost='2.5' />
+	</skillType>
+	<skillType>
+		<id>siege</id>
+		<name>Siege</name>
+		<icon>SiegeSkillIcon</icon>
+		<target_anim>wallDestroy.swf</target_anim>
+		<desc>Activation - Deals damage to a random enemy Structure</desc>
+		<sound>SiegeSound</sound>
 		<cardValue cost='1.5' />
 	</skillType>
 	<skillType>
-		<id>rally</id>
-		<name>Rally</name>
-		<icon>RallySkillIcon</icon>
-		<target_anim>increaseattack.swf</target_anim>
-		<desc>Activation - Increases the Attack of a random allied Assault card</desc>
-		<sound>BoostSound</sound>
-		<cardValue cost='2.5' />
+		<id>mimic</id>
+		<name>Mimic</name>
+		<icon>MimicSkillIcon</icon>
+		<target_anim>mimic.swf</target_anim>
+		<anim>mimic.swf</anim>
+		<desc>Activation - Uses any "Activation" skills of an enemy Assault card, except Mimic. Ignores Type restrictions (ex. "Strike Raider 1" becomes "Strike 1")</desc>
+		<sound>MimicSound</sound>
+		<cardValue cost='2' />
+	</skillType>
+	<skillType>
+		<id>flurry</id>
+		<name>Flurry</name>
+		<icon>FlurrySkillIcon</icon>
+		<target_anim>flurrycharge.swf</target_anim>
+		<desc>Combat-Modifier - 50% chance to Attack extra times a turn</desc>
+		<sound>WeirdSound</sound>
+		<cardValue cost='3' />
+	</skillType>
+	<skillType>
+		<id>swipe</id>
+		<name>Swipe</name>
+		<icon>SwipeSkillIcon</icon>
+		<anim flipY='1'>swipe.swf</anim>
+		<desc>Combat-Modifier - When attacking an Assault unit this also attacks the adjacent enemy Assault units, if any</desc>
+		<sound>WeirdSound</sound>
+		<cardValue cost='2.8' />
+	</skillType>
+	<skillType>
+		<id>fear</id>
+		<name>Fear</name>
+		<icon>FearSkillIcon</icon>
+		<target_anim>fear.swf</target_anim>
+		<desc>Combat-Modifier - Attack Commander directly</desc>
+		<sound>FearSound</sound>
+		<cardValue cost='3' />
 	</skillType>
 	<skillType>
 		<id>antiair</id>
@@ -7085,13 +7892,13 @@
 		<cardValue cost='1.5' />
 	</skillType>
 	<skillType>
-		<id>flying</id>
-		<name>Flying</name>
-		<icon>FlyingSkillIcon</icon>
-		<target_anim>flyingbonus.swf</target_anim>
-		<desc>Defensive - 50% chance to dodge attacks by non-Flying units</desc>
-		<sound>FlyingSound</sound>
-		<cardValue passive='1' cost='2.5' />
+		<id>valor</id>
+		<name>Valor</name>
+		<icon>ValorSkillIcon</icon>
+		<anim flipY='1'>valor.swf</anim>
+		<desc>Combat-Modifier - When enemy has more Assault units than you, deal additional attack damage</desc>
+		<sound>WeirdSound</sound>
+		<cardValue cost='1.8' />
 	</skillType>
 	<skillType>
 		<id>pierce</id>
@@ -7100,6 +7907,34 @@
 		<desc>Combat-Modifier - Reduces the effect of enemy Armor</desc>
 		<target_anim>shieldDestroy_doorsFade.swf</target_anim>
 		<sound>SiegeSound</sound>
+		<cardValue cost='1.5' />
+	</skillType>
+	<skillType>
+		<id>immobilize</id>
+		<name>Immobilize</name>
+		<icon>ImmobilizeIcon</icon>
+		<target_anim>immobilize.swf</target_anim>
+		<loop_anim>immobilizeContinued.swf</loop_anim>
+		<desc>Damage-Dependant - After damaging an enemy from an attack, 50% chance of preventing damaged Assault card from attacking</desc>
+		<sound>ImmobilizeSound</sound>
+		<cardValue cost='1.5' />
+	</skillType>
+	<skillType>
+		<id>poison</id>
+		<name>Poison</name>
+		<icon>PoisonSkillIcon</icon>
+		<target_anim>poison.swf</target_anim>
+		<loop_anim>poisonContinued.swf</loop_anim>
+		<desc>Damage-Dependant - Damaged enemy Assault cards take damage at the beginning of its turn</desc>
+		<sound>PoisonSound</sound>
+		<cardValue cost='2' />
+	</skillType>
+	<skillType>
+		<id>crush</id>
+		<name>Crush</name>
+		<icon>CrushSkillIcon</icon>
+		<target_anim>crush.swf</target_anim>
+		<desc>Damage-Dependant - Damages the enemy Commander when the card destroys an enemy Assault card by attack damage</desc>
 		<cardValue cost='1.5' />
 	</skillType>
 	<skillType>
@@ -7121,90 +7956,6 @@
 		<cardValue cost='2' />
 	</skillType>
 	<skillType>
-		<id>siege</id>
-		<name>Siege</name>
-		<icon>SiegeSkillIcon</icon>
-		<target_anim>wallDestroy.swf</target_anim>
-		<desc>Activation - Deals damage to a random enemy Structure</desc>
-		<sound>SiegeSound</sound>
-		<cardValue cost='1.5' />
-	</skillType>
-	<skillType>
-		<id>counter</id>
-		<name>Counter</name>
-		<icon>CounterSkillIcon</icon>
-		<target_anim>spikeCounterAttack.swf</target_anim>
-		<desc>Defensive - When damaged by an attack, deal damage back to attacker</desc>
-		<sound>LeechSound</sound>
-		<cardValue passive='1' cost='2' />
-	</skillType>
-	<skillType>
-		<id>wall</id>
-		<name>Wall</name>
-		<icon>WallSkillIcon</icon>
-		<target_anim>wallBuild.swf</target_anim>
-		<desc>Defensive - Absorbs damage dealt to the Commander and subtracts from own health</desc>
-		<sound>ArmoredSound</sound>
-		<cardValue passive='1' cost='2' />
-	</skillType>
-	<skillType>
-		<id>poison</id>
-		<name>Poison</name>
-		<icon>PoisonSkillIcon</icon>
-		<target_anim>poison.swf</target_anim>
-		<loop_anim>poisonContinued.swf</loop_anim>
-		<desc>Damage-Dependant - Damaged enemy Assault cards take damage at the beginning of its turn</desc>
-		<sound>PoisonSound</sound>
-		<cardValue cost='2' />
-	</skillType>
-	<skillType>
-		<id>weaken</id>
-		<name>Weaken</name>
-		<icon>WeakenSkillIcon</icon>
-		<target_anim>weaken.swf</target_anim>
-		<desc>Activation - Reduce the attack of a random enemy Assault card</desc>
-		<sound>WeakenSound</sound>
-		<cardValue cost='2.5' />
-	</skillType>
-	<skillType>
-		<id>fear</id>
-		<name>Fear</name>
-		<icon>FearSkillIcon</icon>
-		<target_anim>fear.swf</target_anim>
-		<desc>Combat-Modifier - Attack Commander directly</desc>
-		<sound>FearSound</sound>
-		<cardValue cost='3' />
-	</skillType>
-	<skillType>
-		<id>regenerate</id>
-		<name>Regenerate</name>
-		<icon>RegenerationSkillIcon</icon>
-		<anim>regenerate.swf</anim>
-		<desc>Defensive - When card health reaches zero, 50% chance of gaining back health</desc>
-		<sound>RegenSound</sound>
-		<cardValue passive='1' cost='3' />
-	</skillType>
-	<skillType>
-		<id>mimic</id>
-		<name>Mimic</name>
-		<icon>MimicSkillIcon</icon>
-		<target_anim>mimic.swf</target_anim>
-		<anim>mimic.swf</anim>
-		<desc>Activation - Uses any "Activation" skills of an enemy Assault card, except Mimic. Ignores Type restrictions (ex. "Strike Raider 1" becomes "Strike 1")</desc>
-		<sound>MimicSound</sound>
-		<cardValue cost='2' />
-	</skillType>
-	<skillType>
-		<id>immobilize</id>
-		<name>Immobilize</name>
-		<icon>ImmobilizeIcon</icon>
-		<target_anim>immobilize.swf</target_anim>
-		<loop_anim>immobilizeContinued.swf</loop_anim>
-		<desc>Damage-Dependant - After damaging an enemy from an attack, 50% chance of preventing damaged Assault card from attacking</desc>
-		<sound>ImmobilizeSound</sound>
-		<cardValue cost='1.5' />
-	</skillType>
-	<skillType>
 		<id>rush</id>
 		<name>Rush</name>
 		<target_anim>electricution.swf</target_anim>
@@ -7213,38 +7964,12 @@
 		<cardValue cost='2' />
 	</skillType>
 	<skillType>
-		<id>crush</id>
-		<name>Crush</name>
-		<icon>CrushSkillIcon</icon>
-		<target_anim>crush.swf</target_anim>
-		<desc>Damage-Dependant - Damages the enemy Commander when the card destroys an enemy Assault card by attack damage</desc>
-		<cardValue cost='1.5' />
-	</skillType>
-	<skillType>
 		<id>augment</id>
 		<name>Augment</name>
 		<target_anim>electricution.swf</target_anim>
 		<desc>Increase the strength of a unit's abilities (example using Augment 1: Strike 1 = Strike 2)</desc>
 		<sound>WeirdSound</sound>
 		<cardValue cost='2.5' />
-	</skillType>
-	<skillType>
-		<id>flurry</id>
-		<name>Flurry</name>
-		<icon>FlurrySkillIcon</icon>
-		<target_anim>flurrycharge.swf</target_anim>
-		<desc>Combat-Modifier - 50% chance to Attack extra times a turn</desc>
-		<sound>WeirdSound</sound>
-		<cardValue cost='3' />
-	</skillType>
-	<skillType>
-		<id>evade</id>
-		<name>Evade</name>
-		<icon>EvadeSkillIcon</icon>
-		<target_anim>evade.swf</target_anim>
-		<desc>Defensive - 50% chance to negate the effects of an enemy Activation skill to this</desc>
-		<sound>WeirdSound</sound>
-		<cardValue passive='1' cost='2' />
 	</skillType>
 	<skillType>
 		<id>blitz</id>
@@ -7260,6 +7985,8 @@
 		<icon>RepairSkillIcon</icon>
 		<target_anim>repair.swf</target_anim>
 		<desc>Activation - Replenish a Structure's lost health.</desc>
+		<x_offset>-80</x_offset>
+		<y_offset>-110</y_offset>
 		<cardValue cost='2' />
 	</skillType>
 	<skillType>
@@ -7279,80 +8006,80 @@
 		<cardValue cost='-1' />
 	</skillType>
 	<skillType>
-		<id>enfeeble</id>
-		<name>Enfeeble</name>
-		<icon>EnfeebleSkillIcon</icon>
-		<target_anim>enfeeble.swf</target_anim>
-		<desc>Activation - Increases any damage directed at a random enemy Assault card</desc>
-		<sound>WeirdSound</sound>
-		<cardValue cost='2.5' />
-	</skillType>
-	<skillType>
-		<id>payback</id>
-		<name>Payback</name>
-		<icon>PaybackSkillIcon</icon>
-		<anim>payback.swf</anim>
-		<desc>Defensive - When enemy uses an Activation skill on this (Other than Mimic), 50% chance to use same skill on the original enemy unit</desc>
-		<sound>WeirdSound</sound>
-		<cardValue passive='1' cost='2' />
-	</skillType>
-	<skillType>
-		<id>valor</id>
-		<name>Valor</name>
-		<icon>ValorSkillIcon</icon>
-		<anim flipY='1'>valor.swf</anim>
-		<desc>Combat-Modifier - When enemy has more Assault units than you, deal additional attack damage.</desc>
-		<sound>WeirdSound</sound>
-		<cardValue cost='1.8' />
-	</skillType>
-	<skillType>
-		<id>swipe</id>
-		<name>Swipe</name>
-		<icon>SwipeSkillIcon</icon>
-		<anim flipY='1'>swipe.swf</anim>
-		<desc>Combat-Modifier - When attacking an Assault unit this also attacks the adjacent enemy Assault units, if any.</desc>
-		<sound>WeirdSound</sound>
-		<cardValue cost='2.8' />
-	</skillType>
-	<skillType>
 		<id>shock</id>
 		<name>Shock</name>
-		<icon>CrushSkillIcon</icon>
-		<target_anim>crush.swf</target_anim>
-		<desc>Acitvation - Win the Game</desc>
+		<icon>ShockSkillIcon</icon>
+		<target_anim>shock.swf</target_anim>
+		<desc>Acitvation - Deal damage directly to the Enemy Commander (Damage does not redirect to Walls)</desc>
 		<cardValue cost='1.5' />
 	</skillType>
 	<skillType>
 		<id>recharge</id>
 		<name>Recharge</name>
-		<icon>CrushSkillIcon</icon>
-		<anim>crush.swf</anim>
-		<desc>Acitvation - Install Virus</desc>
+		<icon>RechargeSkillIcon</icon>
+		<desc>Acitvation - 50% chance that this card will return to the bottom of the deck after use</desc>
 		<cardValue cost='1.5' />
 	</skillType>
 	<skillType>
 		<id>infuse</id>
 		<name>Infuse</name>
-		<icon>CrushSkillIcon</icon>
-		<target_anim>crush.swf</target_anim>
-		<desc>Acitvation - Eat Bunnies</desc>
+		<icon>InfuseSkillIcon</icon>
+		<target_anim>infuse.swf</target_anim>
+		<desc>Acitvation - Change the type of any Assault unit (allied or enemy) Also changes any helpful skill (Heal, Rally, etc.)
+			that only affects a certain type to affect the specified type.</desc>
 		<cardValue cost='1.5' />
 	</skillType>
 	<skillType>
 		<id>fusion</id>
 		<name>Fusion</name>
-		<icon>CrushSkillIcon</icon>
-		<target_anim>crush.swf</target_anim>
-		<loop_anim>jacobsLadder.swf</loop_anim>
-		<desc>Static - Dance</desc>
+		<icon>FusionSkillIcon</icon>
+		<loop_anim>fusionloop.swf</loop_anim>
+		<desc>Static - When 3 or more cards with Fusion are active, double the effects of this card's skills.</desc>
 		<cardValue cost='1.5' />
 	</skillType>
 	<skillType>
-		<id>replenish</id>
-		<name>Replenish</name>
+		<id>prefusion</id>
+		<target_anim>fusionbuildup.swf</target_anim>
+	</skillType>
+	<skillType>
+		<id>mist</id>
+		<name>Mist</name>
+		<icon>FogSkillIcon</icon>
+		<target_anim>fogreveal.swf</target_anim>
+		<loop_anim>fogloop.swf</loop_anim>
+		<desc>Static - Allied Assault and Structure cards are hidden until active or destroyed</desc>
+		<cardValue cost='1.5' />
+	</skillType>
+	<skillType>
+		<id>tribute</id>
+		<name>Tribute</name>
 		<icon>CrushSkillIcon</icon>
 		<target_anim>crush.swf</target_anim>
-		<desc>Activation - Release the Kitties</desc>
+		<desc>Activation - Whatever</desc>
+		<cardValue cost='1.5' />
+	</skillType>
+	<skillType>
+		<id>berserk</id>
+		<name>Berserk</name>
+		<icon>CrushSkillIcon</icon>
+		<target_anim>crush.swf</target_anim>
+		<desc>Activation - Whatever</desc>
+		<cardValue cost='1.5' />
+	</skillType>
+	<skillType>
+		<id>protect</id>
+		<name>Protect</name>
+		<icon>CrushSkillIcon</icon>
+		<target_anim>crush.swf</target_anim>
+		<desc>Activation - Whatever</desc>
+		<cardValue cost='1.5' />
+	</skillType>
+	<skillType>
+		<id>supply</id>
+		<name>Supply</name>
+		<icon>CrushSkillIcon</icon>
+		<target_anim>crush.swf</target_anim>
+		<desc>Activation - Whatever</desc>
 		<cardValue cost='1.5' />
 	</skillType>
 	
@@ -7398,6 +8125,12 @@
 		<name>Promotional</name>
 		<icon>EliteSetIcon</icon>
 		<visible>1</visible>
+	</cardSet>
+	<cardSet>
+		<id>9000</id>
+		<name>Exclusive</name>
+		<icon>RewardSetIcon</icon>
+		<visible>0</visible>
 	</cardSet>
 	<cardSet>
 		<id>9999</id>

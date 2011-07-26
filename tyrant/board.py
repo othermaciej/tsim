@@ -60,11 +60,35 @@ class Board:
         self.activate_structures(opposing_board)
         self.activate_assault_units(opposing_board)
 
-    def perform_activation_skills(self, card, opposing_board):
-        # XXX
+    def perform_one_activation_skill(self, card, skill, opposing_board):
         # Enfeeble, Heal, Jam, Mimic, Rally, Siege, Strike, Weaken
         # Account for: Evade, Payback, Regenerate
-        return False
+
+        # Get qualified target list
+        #     Enfeeble - hostile assault
+        #     Heal - friendly wounded
+        #     Jam - hostile assault, active or about to activate
+        #     Mimic - hostile assault
+        #     Rally - friendly active
+        #     Siege - hostile structure
+        #     Strike - hostile assault
+        #     Weaken - hostile assault, active or about to activate
+        # For each target:
+        #     If hostile, check evade
+        #     Apply skill effect (Mimic is a special case!)
+        #     Apply skill effect 
+        #       (jam is coin_toss)
+        #       Strike is affected by enfeeble and can trigger regenerate
+        #     If hostile check payback
+        pass
+
+    def perform_activation_skills(self, card, opposing_board):
+        if card.cannot_use_skills():
+            return
+
+        for skill in card.activation_skills():
+            perform_one_activation_skill(self, card, skill, opposing_board)
+
 
     def commander_target(self):
         for card in self._active_structures:

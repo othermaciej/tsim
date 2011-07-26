@@ -45,6 +45,15 @@ class CardInPlay:
     def counter(self):
         return self._card.counter()
 
+    def cannot_use_skills(self):
+        if self.is_dead():
+            print "    Can't use skills: {" + self.description() + "} is DEAD"
+            return True
+        if self.is_jammed():
+            print "    Can't use skills: {" + self.description() + "} is JAMMED"
+            return True
+        return False
+
 
 class CommanderCardInPlay(CardInPlay):
     def __init__(self, card):

@@ -87,6 +87,17 @@ class Board:
         # Attack Jammed = Attacker Immobilized = Attacker weakened to 0 > Swipe check = Flurry check > Fear >  Enfeeble = Valor > Flying = Antiair > Armored = Pierce > Immobilize = Poison > Count Damage > Crush > Defender Regenerate > Counter > Attacker Regenerate = Leech > Siphon > Flurry Repeat
 
         # FIXME need to implement Swipe and Flurry
+        flurry = attacker.flurry()
+        if flurry > 0 and coin_toss():
+            attacks = flurry + 1
+            print "    Flurry! performing " + str(attacks) + " total attacks"
+            for i in range(1, attacks + 1):
+                print "=== Attack #" + str(i) + " ==="
+                self.perform_single_attack(index, attacker, opposing_board)
+        else:
+            self.perform_single_attack(index, attacker, opposing_board)
+
+    def perform_single_attack(self, index, attacker, opposing_board):
 
         if attacker.is_dead():
             print "    Can't attack: {" + attacker.description() + "} is DEAD"

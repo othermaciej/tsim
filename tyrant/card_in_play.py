@@ -139,6 +139,21 @@ class AssaultCardInPlay(CardInPlay):
     def suffer_poison(self, amount):
         self._poisoned = max(self._poisoned, amount)
 
+    def cannot_attack(self):
+        if self.is_dead():
+            print "    Can't attack: {" + self.description() + "} is DEAD"
+            return True
+        if self.is_jammed():
+            print "    Can't attack: {" + self.description() + "} is JAMMED"
+            return True
+        if self.is_immobilized():
+            print "    Can't attack: {" + self.description() + "} is IMMOBILIZED"
+            return True
+        if self.attack() <= 0:
+            print "    Can't attack: {" + self.description() + "} has attack " + str(self.attack())
+            return True
+        return False
+
     def status_effects_description(self):
         status_list = []
         if self._immobilized:

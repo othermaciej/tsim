@@ -72,50 +72,64 @@ class Board:
                 return card
         return self._commander
 
-    def target_for_index(self, index):
-        if len(self._active_assault_units) <= index:
-            return self.commander_target()
+    def non_commander_target_for_index(self, index):
+        if index < 0 or index >= len(self._active_assault_units):
+            return None
         target = self._active_assault_units[index]
         if not target or target.is_dead():
-            return self.commander_target()
-        return target
+            return None
+
+    def target_for_index(self, index):
+        target = self.non_commander_target_for_index(self, index)
+        if target: return target
+        return self.commander_target()
 
     def assault_count(self):
         return len(self._active_assault_units)
 
+
     def perform_attack(self, index, attacker, opposing_board):
         # Attack Jammed = Attacker Immobilized = Attacker weakened to 0 > Swipe check = Flurry check > Fear >  Enfeeble = Valor > Flying = Antiair > Armored = Pierce > Immobilize = Poison > Count Damage > Crush > Defender Regenerate > Counter > Attacker Regenerate = Leech > Siphon > Flurry Repeat
 
-        # FIXME need to implement Swipe and Flurry
-        flurry = attacker.flurry()
-        if flurry > 0 and coin_toss():
-            attacks = flurry + 1
-            print "    Flurry! performing " + str(attacks) + " total attacks"
-            for i in range(1, attacks + 1):
-                print "=== Attack #" + str(i) + " ==="
-                self.perform_single_attack(index, attacker, opposing_board)
-        else:
-            self.perform_single_attack(index, attacker, opposing_board)
+        # FIXME need to implement Swipe
 
-    def perform_single_attack(self, index, attacker, opposing_board):
-
-        if attacker.is_dead():
-            print "    Can't attack: {" + attacker.description() + "} is DEAD"
-            return
-        if attacker.is_jammed():
-            print "    Can't attack: {" + attacker.description() + "} is JAMMED"
-            return
-        if attacker.is_immobilized():
-            print "    Can't attack: {" + attacker.description() + "} is IMMOBILIZED"
-            return
-        if attacker.attack() <= 0:
-            print "    Can't attack: {" + attacker.description() + "} has attack " + str(attacker.attack())
+        if attacker.cannot_attack():
             return
 
         if attacker.fear():
-            target = opposing_board.commander_target()
+            self.perform_attack_on_target(opposing_board.commander_target(), attacker, opposing_board)
+
+        elif attacker.swipe():
+            main_target = opposing_board.non_commander_target_for_index(index)
+            if main_target:
+                left_target = opposing_board.non_commander_target_for_index(index - 1)
+                right_target = opposing_board.non_commander_target_for_index(index + 1)
+                if left_target:
+                    self.perform_attack_on_target(left_target, attacker, opposing_board)
+                self.perform_attack_on_target(main_target, attacker, opposing_board)
+                if right_target:
+                    self.perform_attack_on_target(right_target, attacker, opposing_board)
+            else:
+                self.perform_attack_on_target(opposing_board.commander_target(), attacker, opposing_board)
+
         else:
-            target = opposing_board.target_for_index(index)
+            self.perform_attack_on_target(opposing_board.target_for_index(index), attacker, opposing_board)
+
+    def perform_attack_on_target(self, target, attacker, opposing_board):
+        attacks = 1
+        flurry = attacker.flurry()
+        if flurry > 0 and coin_toss():
+            attacks += flurry
+            print "    Flurry! performing " + str(attacks) + " total attacks"
+
+        for i in range(1, attacks + 1):
+            if attacks > 1: print "=== Attack #" + str(i) + " ==="
+            self.perform_single_attack_on_target(target, attacker, opposing_board)
+            
+
+    def perform_single_attack_on_target(self, target, attacker, opposing_board):
+        if attacker.cannot_attack():
+            return
 
         damage = attacker.attack()
         print "    Base damage (including rally/weaken): " + str(damage)

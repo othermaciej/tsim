@@ -62,9 +62,9 @@ def extract_rarity_field(node, name):
     return rarity_code_to_rarity(field)
 
 def parse_skill_node(node):
-    name = node.getAttribute("id").capitalize()
+    name = node.getAttribute("id")
     value = node.getAttribute("x")
-    value = value if value != "" else None
+    value = atoi(value) if value != "" else None
     all = node.getAttribute("all") != ""
     target_faction_type_code = node.getAttribute("y")
     target_faction = type_code_to_faction(atoi(target_faction_type_code)) if target_faction_type_code != "" else None

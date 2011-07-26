@@ -30,6 +30,28 @@ class Card:
     def unique(self):
         return self._unique
 
+    def skill_value(self, skill_name):
+        skill = next((skill for skill in self._skills if skill.name() == skill_name), None)
+        if skill:
+            return skill.value()
+        else:
+            return 0
+
+    def has_skill(self, skill_name):
+        return next((skill for skill in self._skills if skill.name() == skill_name), None) != None
+
+    def flying(self):
+        return self.has_skill("flying")
+
+    def armored(self):
+        return self.skill_value("armored")
+
+    def regenerate(self):
+        return self.skill_value("regenerate")
+
+    def counter(self):
+        return self.skill_value("counter")
+
     def rarity_and_faction_string(self):
         if self.rarity() == "Legendary":
             return "Legendary " + self.faction()
@@ -59,6 +81,39 @@ class AssaultCard(Card):
         self._health = health
         self._attack = attack
         self._delay = delay
+
+    def fear(self):
+        return self.has_skill("fear")
+
+    def swipe(self):
+        return self.has_skill("swipe")
+
+    def flurry(self):
+        return self.skill_value("flurry")
+
+    def valor(self):
+        return self.skill_value("valor")
+
+    def antiair(self):
+        return self.skill_value("antiair")
+
+    def pierce(self):
+        return self.skill_value("pierce")
+
+    def immobilize(self):
+        return self.has_skill("immobilize")
+
+    def poison(self):
+        return self.skill_value("poison")
+
+    def crush(self):
+        return self.skill_value("crush")
+
+    def leech(self):
+        return self.skill_value("leech")
+
+    def siphon(self):
+        return self.skill_value("siphon")
 
     def health(self):
         return self._health
@@ -96,6 +151,9 @@ class StructureCard(Card):
 
     def delay(self):
         return self._delay
+
+    def is_wall(self):
+        return self.has_skill("wall")
 
     def description(self):
         return self.name() + " (" + str(self.rarity_and_faction_string()) + ")  [" + str(self.health()) + "hp / " + str(self.delay()) + " | "  + self.skill_description() + "]"

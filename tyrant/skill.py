@@ -20,8 +20,8 @@ class Skill:
         return self._target_faction
 
     def description(self):
-        description = self.name()
+        description = self.name().capitalize()
         description += " All" if self.all() else ""
         description += " " + self.target_faction() if self.target_faction() != None else ""
-        description += " " + self.value() if self.value() != None else ""
+        description += " " + str(self.value()) if self.value() != None else ""
         return description

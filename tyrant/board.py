@@ -1,9 +1,7 @@
 
 import random
-from tyrant.card_in_play import CommanderCardInPlay, AssaultCardInPlay, StructureCardInPlay
+from tyrant.card_in_play import CommanderCardInPlay, AssaultCardInPlay, StructureCardInPlay, coin_toss
 
-def coin_toss():
-    return random.randint(0, 1) == 1
 
 class Board:
     def __init__(self, deck):
@@ -102,6 +100,7 @@ class Board:
         target = self._active_assault_units[index]
         if not target or target.is_dead():
             return None
+        return target
 
     def target_for_index(self, index):
         target = self.non_commander_target_for_index(self, index)
@@ -129,9 +128,15 @@ class Board:
                 left_target = opposing_board.non_commander_target_for_index(index - 1)
                 right_target = opposing_board.non_commander_target_for_index(index + 1)
                 if left_target:
+                    print "=== Swipe Attack left ==="
                     self.perform_attack_on_target(left_target, attacker, opposing_board)
+
+                if left_target or right_target:
+                    print "=== Swipe Attack center ==="
                 self.perform_attack_on_target(main_target, attacker, opposing_board)
+
                 if right_target:
+                    print "=== Swipe Attack right ==="
                     self.perform_attack_on_target(right_target, attacker, opposing_board)
             else:
                 self.perform_attack_on_target(opposing_board.commander_target(), attacker, opposing_board)
@@ -147,7 +152,7 @@ class Board:
             print "    Flurry! performing " + str(attacks) + " total attacks"
 
         for i in range(1, attacks + 1):
-            if attacks > 1: print "=== Attack #" + str(i) + " ==="
+            if attacks > 1: print "=== Attack \#" + str(i) + " ==="
             self.perform_single_attack_on_target(target, attacker, opposing_board)
             
 
@@ -193,67 +198,51 @@ class Board:
 
         if attacker.immobilize():
             if coin_toss():
+                print "    Immobilize! Unit {" + attacker.description() + "} immobilizes {" + target.description() + "}"
                 target.suffer_immobilize()
-                print "    Immobilize! Unit {" + attacker.description() + "} immobilized {" + target.description() + "}"
     
         poison = attacker.poison()
         if poison > 0:
+            print "    Poison! Unit {" + attacker.description() + "} inflicts " + str(poison) + " poison on target {" + target.description() + "}"
             target.suffer_poison(poison)
-            print "    Poison! Unit {" + attacker.description() + "} inflicted " + str(poison) + " poison on target {" + target.description() + "}"
 
-        target.take_damage(damage)
-        print "    Unit {" + attacker.description() + "} did " + str(damage) + " attack damage to {" + target.description() + "}"
+        target_died = target.take_damage(damage)
+        print "    Unit {" + attacker.description() + "} does " + str(damage) + " attack damage to {" + target.description() + "}"
 
         crush = attacker.crush()
-        if crush > 0 and target.is_dead():
+        if crush > 0 and target_died:
             crush_target = opposing_board.commander_target()
+            print "    Crush! Unit {" + attacker.description() + "} does {" + str(damage) + "} crush damage to {" + crush_target.description() + "}"
             crush_target.take_damage(damage)
-            print "    Crush! Unit {" + attacker.description() + "} did {" + str(damage) + "} crush damage to {" + crush_target.description() + "}"
-            crush_target_regenerate = crush_target.regenerate()
-            if crush_target.is_dead() and crush_target_regenerate > 0:
-                if coin_toss():                
-                    crush_target.perform_regenerate(crush_target_regenerate)
-                    print "    Regenerate! Crush target unit {" + crush_target.description() + "} regenerated to " + str(crush_target_regenerate)
-
-        target_regenerate = target.regenerate()
-        if target.is_dead() and target_regenerate > 0:
-            if coin_toss():                
-                target.perform_regenerate(target_regenerate)
-                print "    Regenerate! Unit {" + target.description() + "} regenerated to {" + str(target_regenerate) + "}"
+            print "  --Final crushed unit status: {" + crush_target.description() + "}"
 
         counter = target.counter()
         if counter > 0:
+            print "    Unit {" + attacker.description() + "} suffers " + str(counter) + " counter damage from {" + target.description() + "}"
             attacker.take_damage(counter)
-            print "    Unit {" + attacker.description() + "} suffered " + str(counter) + " counter damage from {" + target.description() + "}"
-
-        attacker_regenerate = attacker.regenerate()
-        if attacker.is_dead() and attacker_regenerate > 0:
-            if coin_toss():                
-                attacker.perform_regenerate(attacker_regenerate)
-                print "    Regenerate! Attacker unit {" + attacker.description() + "} regenerated to " + str(attacker_regenerate)
 
         target_is_assault = target.type() == "assault"
         leech = attacker.leech()
         if leech > 0 and target_is_assault and not attacker.is_dead():
+            print "    Leech! Unit {" + attacker.description() + "} leeches for " + str(leech) + "hp"
             attacker.heal(leech)
-            print "    Leech! Unit {" + attacker.description() + "} leech healed " + str(leech)
 
         siphon = attacker.siphon()
         if siphon > 0 and target_is_assault:
+            print "    Siphon! Commander {" + self._commander.description() + "} receives siphon for " + str(siphon) + "hp from {" + attacker.description() + "}"
             self._commander.heal(siphon)
-            print "    Siphon! Commander {" + self._commander.description() + "} siphon healed " + str(siphon) + " by {" + attacker.description() + "}"
+
+        print "  --Final attacking unit status: {" + attacker.description() + "}"
+        print "  --Final defending unit status: {" + target.description() + "}"
+
 
     def apply_poison(self):
         # FIXME: when exactly is poison applied?
         for card in self._active_assault_units:
-            card.apply_poison()
             if card.poisoned() > 0:
-                print "    Poison damage! Poisoned unit {" + card.description() + "} suffered " + str(card.poisoned()) + " poison damage"
-            regenerate = card.regenerate()
-            if card.is_dead() and regenerate > 0:
-                if coin_toss():                
-                    card.perform_regenerate(regenerate)
-                    print "    Regenerate! Poisoned unit {" + card.description() + "} regenerated to " + str(regenerate)
+                print "    Poison damage! Poisoned unit {" + card.description() + "} will suffer " + str(card.poisoned()) + " poison damage"
+                card.apply_poison()
+                print "  --Final poisoned unit status: {" + card.description() + "}"
 
     def bury_the_dead(self):
         for card in self._active_structures:

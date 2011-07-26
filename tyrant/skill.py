@@ -1,4 +1,6 @@
 
+activation_skills = {"heal", "rally", "enfeeble", "strike", "jam", "weaken", "siege", "mimic"}
+
 class Skill:
     "A Tyrant card skill"
     def __init__(self, name, value, all, target_faction):
@@ -19,6 +21,9 @@ class Skill:
     def target_faction(self):
         return self._target_faction
 
+    def is_activation_skill(self):
+        return self._name in activation_skills
+    
     def description(self):
         description = self.name().capitalize()
         description += " All" if self.all() else ""

@@ -1,5 +1,11 @@
 
 from string import join
+import random
+
+
+def coin_toss():
+    "Return True 50% of the time"
+    return random.randint(0, 1) == 1
 
 class CardInPlay:
     def __init__(self, card):
@@ -14,6 +20,13 @@ class CardInPlay:
 
     def take_damage(self, amount):
         self._cur_health -= amount
+        died = self.is_dead()
+        regenerate = self.regenerate()
+        if died and regenerate > 0:
+            if coin_toss():                
+                print "    Regenerate! Unit {" + self.description() + "} will regenerate to " + str(regenerate)
+                self.perform_regenerate(regenerate)
+
 
     def heal(self, amount):
         self._cur_health = min(self._card.health(), self._cur_health + amount)
@@ -31,6 +44,9 @@ class CardInPlay:
         return self.health() <= 0
 
     def enfeebled(self):
+        return 0
+
+    def is_jammed(self):
         return 0
 
     def flying(self):
@@ -54,6 +70,8 @@ class CardInPlay:
             return True
         return False
 
+    def activation_skills(self):
+        return self._card.activation_skills()
 
 class CommanderCardInPlay(CardInPlay):
     def __init__(self, card):

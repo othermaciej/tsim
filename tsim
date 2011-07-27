@@ -9,16 +9,25 @@ from tyrant.battle import Battle
 def main():
     print "Tyrant Combat Simulator v0.0"
     collection = CardCollection("cards.xml")
-    deck1 = Deck("Test_imp.deck", collection)
+    print "Offense: "
+    deck1 = Deck("PummPool_5_3_MDQ.deck", collection)
     deck1.dump()
-    deck2 = Deck("Test_Raider.deck", collection)
+    print "\nDefense: "
+    deck2 = Deck("Azure_Daemon_drac.deck", collection)
     deck2.dump()
-    battle = Battle(deck1, deck2, False)
-    offense_won = battle.simulate()
-    if offense_won:
-        print "Victory for OFFENSE"
-    else:
-        print "Victory for DEFENSE"
+
+    offense_wins = 0
+    defense_wins = 0
+    repetitions = 1000
+    for i in range(0, repetitions):
+        battle = Battle(deck1, deck2, False)
+        offense_won = battle.simulate()
+        if offense_won:
+            offense_wins += 1
+        else:
+            defense_wins += 1
+
+    print "Final tally: offense wins " + str(offense_wins * 100.0 / repetitions) + "%, defense wins " + str(defense_wins * 100.0 / repetitions) + "%"
 
 
 main()

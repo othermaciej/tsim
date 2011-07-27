@@ -1,12 +1,13 @@
 
 from tyrant.board import Board
+from log import is_logging, log
 
 class Battle:
     def __init__(self, offense_deck, defense_deck, surge):
         self._surge = surge
-        print "Setting up offense board"
+        if is_logging: log("Setting up offense board")
         self._offense_board = Board(offense_deck)
-        print "Setting up defense board"
+        if is_logging: log("Setting up defense board")
         self._defense_board = Board(defense_deck)
 
     def is_offense_turn(self, turn):
@@ -16,12 +17,17 @@ class Battle:
         turn = 0
         commander_killed = False
         while turn <= 50 and not commander_killed:
-            print "Turn " + str(turn)
             if self.is_offense_turn(turn):
-                print "Offense plays..."
+                if is_logging: log("Turn " + str(turn) + "Offense plays... ------------------------")
                 commander_killed = self._offense_board.play_random_turn(self._defense_board)
             else:
-                print "Defense plays..."
+                if is_logging: log("Turn " + str(turn) + "Defense plays... ------------------------")
                 commander_killed = self._defense_board.play_random_turn(self._offense_board)
             turn += 1
+        if is_logging:
+            if commander_killed and self.is_offense_turn(turn - 1):
+                log("OFFENSE wins")
+            else:
+                log("DEFENSE wins")
+
         return commander_killed and self.is_offense_turn(turn - 1)

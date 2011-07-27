@@ -1,33 +1,60 @@
 #!/usr/bin/env python
 
-from string import atoi
+import argparse
 
 from tyrant.card_collection import CardCollection
 from tyrant.deck import Deck
 from tyrant.battle import Battle
 
+def process_arguments():
+    parser = argparse.ArgumentParser(description='Simulate tyrant battles.')
+    parser.add_argument('off_deck', metavar='OFF_DECK', type=str, nargs=1,
+                        help='offense deck to test')
+    parser.add_argument('def_deck', metavar='DEF_DECK', type=str, nargs=1,
+                        help='defense deck to test')
+    parser.add_argument('-s --surge', dest='surge', action='store_const',
+                        const=True, default=False,
+                        help='test using Surge mode (default: test using Fight mode)')
+    parser.add_argument('-r --rounds', metavar='R', dest='rounds', type=int,
+                        default=1000,
+                        help='test matchup for R rounds (default: 1000)')
+    parser.add_argument('-l --logging', dest='logging', action='store_const',
+                        const=True, default=False,
+                        help='test matchup for R rounds (default: 1000)')
+
+    return parser.parse_args()
+
 def main():
+    args = process_arguments()
+
     print "Tyrant Combat Simulator v0.0"
     collection = CardCollection("cards.xml")
-    print "Offense: "
-    deck1 = Deck("PummPool_5_3_MDQ.deck", collection)
+    collection.dump_short_summary()
+
+    if args.logging:
+        print "== Logging enabled. =="
+
+    print "\nOffense: " + args.off_deck[0]
+    deck1 = Deck(args.off_deck[0], collection)
     deck1.dump()
-    print "\nDefense: "
-    deck2 = Deck("Azure_Daemon_drac.deck", collection)
+    print "\nDefense: " + args.def_deck[0]
+    deck2 = Deck(args.def_deck[0], collection)
     deck2.dump()
+    print "\n"
 
     offense_wins = 0
     defense_wins = 0
-    repetitions = 1000
-    for i in range(0, repetitions):
-        battle = Battle(deck1, deck2, False)
+    rounds = args.rounds
+    for i in range(0, rounds):
+        battle = Battle(deck1, deck2, args.surge)
         offense_won = battle.simulate()
         if offense_won:
             offense_wins += 1
         else:
             defense_wins += 1
 
-    print "Final tally: offense wins " + str(offense_wins * 100.0 / repetitions) + "%, defense wins " + str(defense_wins * 100.0 / repetitions) + "%"
-
+    print "RESULTS:"
+    print "    " +  ("Surge" if args.surge else "Fight") + " Offense wins: " + str(offense_wins * 100.0 / rounds) + "%"
+    print "    " +  ("Surge" if args.surge else "Fight") + " Defense wins: " + str(defense_wins * 100.0 / rounds) + "%"
 
 main()

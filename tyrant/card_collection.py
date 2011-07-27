@@ -9,7 +9,7 @@ def print_cards(label, cardList, showCount = True):
 class CardCollection:
     def __init__(self, filename):
         self._cards = parse_card_file(filename)
-        self._cards_by_name = dict([(card.name(), card) for card in self._cards])
+        self._cards_by_name = {card.name() : card for card in self._cards}
 
     def card_by_name(self, name):
         if name not in self._cards_by_name:
@@ -26,4 +26,7 @@ class CardCollection:
         print_cards("Assault Cards", assaultCards)
         print_cards("Structure Cards", structureCards)
         print_cards("Action Cards", actionCards)
+
+    def dump_short_summary(self):
+        print str(len(self._cards)) + " Cards in library"
 

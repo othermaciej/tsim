@@ -43,11 +43,23 @@ class CardInPlay:
     def is_dead(self):
         return self.health() <= 0
 
+    def is_wounded(self):
+        return self.health() > 0 and self.health() < self._card.health()
+
     def enfeebled(self):
         return 0
 
     def is_jammed(self):
         return 0
+
+    def faction(self):
+        return self._card.faction()
+
+    def evade(self):
+        return self._card.evade()
+
+    def payback(self):
+        return self._card.payback()
 
     def flying(self):
         return self._card.flying()
@@ -101,6 +113,9 @@ class AssaultCardInPlay(CardInPlay):
 
     def is_active(self):
         return self._cur_delay == 0
+
+    def is_ready_next_turn(self):
+        return self._cur_delay <= 1
 
     def tick(self):
         if self._cur_delay > 0:
@@ -165,6 +180,19 @@ class AssaultCardInPlay(CardInPlay):
 
     def suffer_poison(self, amount):
         self._poisoned = max(self._poisoned, amount)
+
+    def suffer_enfeeble(self, amount):
+        self._enfeebled += amount
+
+    def suffer_jam(self):
+        self._jammed = True
+
+    def rally(self, amount):
+        self._cur_attack += amount
+
+    def weaken(self, amount):
+        if self._cur_attack > 0:
+            self._cur_attack -= amount
 
     def cannot_attack(self):
         if self.is_dead():

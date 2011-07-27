@@ -43,6 +43,12 @@ class Card:
     def activation_skills(self):
         return [skill for skill in self._skills if skill.is_activation_skill()]
 
+    def evade(self):
+        return self.has_skill("evade")
+
+    def payback(self):
+        return self.has_skill("payback")
+
     def flying(self):
         return self.has_skill("flying")
 

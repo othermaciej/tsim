@@ -58,34 +58,87 @@ class Board:
         self.activate_structures(opposing_board)
         self.activate_assault_units(opposing_board)
 
-    def perform_one_activation_skill(self, card, skill, opposing_board):
-        # Enfeeble, Heal, Jam, Mimic, Rally, Siege, Strike, Weaken
-        # Account for: Evade, Payback, Regenerate
-
-        # Get qualified target list
-        #     Enfeeble - hostile assault
-        #     Heal - friendly wounded
-        #     Jam - hostile assault, active or about to activate
-        #     Mimic - hostile assault
-        #     Rally - friendly active
-        #     Siege - hostile structure
-        #     Strike - hostile assault
-        #     Weaken - hostile assault, active or about to activate
-        # For each target:
-        #     If hostile, check evade
-        #     Apply skill effect (Mimic is a special case!)
-        #     Apply skill effect 
-        #       (jam is coin_toss)
-        #       Strike is affected by enfeeble and can trigger regenerate
-        #     If hostile check payback
-        pass
-
     def perform_activation_skills(self, card, opposing_board):
         if card.cannot_use_skills():
             return
-
         for skill in card.activation_skills():
-            perform_one_activation_skill(self, card, skill, opposing_board)
+            self.perform_one_activation_skill(card, skill, opposing_board)
+
+    def perform_one_activation_skill(self, card, skill, opposing_board):
+        targets = self.get_target_list_for_skill(skill, opposing_board)
+        for target in targets:
+            self.perform_activation_skill_on_target(card, skill, target)
+
+    def get_target_list_for_skill(self, skill, opposing_board):
+        targeting = skill.targeting()
+
+        if targeting == "friendly wounded":
+            targets = [card for card in self._active_assault_units if card.is_wounded()]
+        elif targeting == "friendly active":
+            targets = [card for card in self._active_assault_units if card.is_active()]
+        elif targeting == "hostile":
+            targets = [card for card in opposing_board.active_assault_units()]
+        elif targeting == "hostile ready":
+            targets = [card for card in opposing_board.active_assault_units() if card.is_ready_next_turn()]
+        elif targeting == "hostile structure":
+            targets = [card for card in opposing_board.active_structures()]
+
+        target_faction = skill.target_faction()
+        if target_faction:
+            targets = [card for card in targets if card.faction() == target_faction]
+
+        if skill.all():
+            return targets
+        else:
+            return [random.choice(targets)] if targets else []
+        
+    def perform_activation_skill_on_target(self, card, skill, target):
+        # Enfeeble, Heal, Jam, Mimic, Rally, Siege, Strike, Weaken
+        # Account for: Evade, Payback, Regenerate
+
+        print "    Activation Skill: {" + card.description() + "} will perform " + skill.description() + " on {" + target.description() + "}"
+        hostile = skill.is_hostile_activation_skill()
+        if hostile and target.evade():
+            if coin_toss():
+                print "    Evade! {" + target.description() + "} evaded " + skill.description()
+                print "  --Final skill target status: {" + target.description() + "}"
+                return
+
+        can_payback = hostile
+
+        skill_name = skill.name()
+        if skill_name == "enfeeble":
+            target.suffer_enfeeble(skill.value())
+        elif skill_name == "heal":
+            target.heal(skill.value())
+        elif skill_name == "jam":
+            if coin_toss():
+                target.suffer_jam()
+            else:
+                print "    Jam failed on {" + target.description() + "}"
+                # no chance for payback if it misses
+                can_payback = False
+        elif skill_name == "mimic":
+            # XXX - implement mimic
+            can_payback = False
+        elif skill_name == "rally":
+            target.rally(skill.value())
+        elif skill_name == "siege":
+            target.take_damage(skill.value())
+            can_payback = False
+        elif skill_name == "strike":
+            damage = skill.value()
+            enfeebled = target.enfeebled()
+            if enfeebled > 0:
+                damage += enfeebled
+                print "    Enfeeble bonus damage: " + str(enfeebled)
+            target.take_damage(damage)
+        elif skill_name == "weaken":
+            target.weaken(skill.value())
+
+        # XXX - implement payback
+
+        print "  --Final skill target status: {" + target.description() + "}"
 
 
     def commander_target(self):
@@ -103,18 +156,15 @@ class Board:
         return target
 
     def target_for_index(self, index):
-        target = self.non_commander_target_for_index(self, index)
+        target = self.non_commander_target_for_index(index)
         if target: return target
         return self.commander_target()
 
     def assault_count(self):
         return len(self._active_assault_units)
 
-
     def perform_attack(self, index, attacker, opposing_board):
-        # Attack Jammed = Attacker Immobilized = Attacker weakened to 0 > Swipe check = Flurry check > Fear >  Enfeeble = Valor > Flying = Antiair > Armored = Pierce > Immobilize = Poison > Count Damage > Crush > Defender Regenerate > Counter > Attacker Regenerate = Leech > Siphon > Flurry Repeat
-
-        # FIXME need to implement Swipe
+        # Attack Jammed = Attacker Immobilized = Attacker weakened to 0 > Swipe check > Flurry check > Fear >  Enfeeble = Valor > Flying = Antiair > Armored = Pierce > Immobilize = Poison > Count Damage > Crush > Defender Regenerate > Counter > Attacker Regenerate = Leech > Siphon > Flurry Repeat > Swipe Repeat
 
         if attacker.cannot_attack():
             return
@@ -155,7 +205,6 @@ class Board:
             if attacks > 1: print "=== Attack \#" + str(i) + " ==="
             self.perform_single_attack_on_target(target, attacker, opposing_board)
             
-
     def perform_single_attack_on_target(self, target, attacker, opposing_board):
         if attacker.cannot_attack():
             return
@@ -235,7 +284,6 @@ class Board:
         print "  --Final attacking unit status: {" + attacker.description() + "}"
         print "  --Final defending unit status: {" + target.description() + "}"
 
-
     def apply_poison(self):
         # FIXME: when exactly is poison applied?
         for card in self._active_assault_units:
@@ -264,6 +312,12 @@ class Board:
 
     def commander(self):
         return self._commander
+    
+    def active_assault_units(self):
+        return self._active_assault_units
+
+    def active_structures(self):
+        return self._active_structures
     
     def play_random_turn(self, opposing_board):
         self.apply_poison()

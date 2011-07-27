@@ -18,6 +18,7 @@ class Skill:
         self._value = value
         self._all = all
         self._target_faction = target_faction
+        self._unrestricted_version = None
 
     def name(self):
         return self._name
@@ -39,6 +40,14 @@ class Skill:
 
     def targeting(self):
         return skill_targeting[self.name()]
+
+    def unrestricted_version(self):
+        if not self._unrestricted_version:
+            if not self.target_faction:
+                self._unrestricted_version = self
+            else:
+                self._unrestricted_version = Skill(self._name, self._value, self._all, None)
+        return self._unrestricted_version
     
     def description(self):
         description = self.name().capitalize()

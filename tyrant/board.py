@@ -61,13 +61,16 @@ class Board:
     def perform_activation_skills(self, card, opposing_board):
         if card.cannot_use_skills():
             return
-        for skill in card.activation_skills():
+        self.perform_activation_skill_list(card, card.activation_skills(), opposing_board)
+
+    def perform_activation_skill_list(self, card, skills, opposing_board):
+        for skill in skills:
             self.perform_one_activation_skill(card, skill, opposing_board)
 
     def perform_one_activation_skill(self, card, skill, opposing_board):
         targets = self.get_target_list_for_skill(skill, opposing_board)
         for target in targets:
-            self.perform_activation_skill_on_target(card, skill, target)
+            self.perform_activation_skill_on_target(card, skill, target, opposing_board)
 
     def get_target_list_for_skill(self, skill, opposing_board):
         targeting = skill.targeting()
@@ -92,7 +95,7 @@ class Board:
         else:
             return [random.choice(targets)] if targets else []
         
-    def perform_activation_skill_on_target(self, card, skill, target):
+    def perform_activation_skill_on_target(self, card, skill, target, opposing_board, can_payback=True):
         # Enfeeble, Heal, Jam, Mimic, Rally, Siege, Strike, Weaken
         # Account for: Evade, Payback, Regenerate
 
@@ -104,7 +107,7 @@ class Board:
                 print "  --Final skill target status: {" + target.description() + "}"
                 return
 
-        can_payback = hostile
+        can_payback = can_payback and hostile
 
         skill_name = skill.name()
         if skill_name == "enfeeble":
@@ -120,6 +123,8 @@ class Board:
                 can_payback = False
         elif skill_name == "mimic":
             # XXX - implement mimic
+            mimiced_skills = [skill.unrestricted_version() for skill in target.activation_skills()]
+            self.perform_activation_skill_list(card, mimiced_skills, opposing_board)
             can_payback = False
         elif skill_name == "rally":
             target.rally(skill.value())
@@ -136,10 +141,12 @@ class Board:
         elif skill_name == "weaken":
             target.weaken(skill.value())
 
-        # XXX - implement payback
-
         print "  --Final skill target status: {" + target.description() + "}"
 
+        if target.payback() and can_payback:
+            if coin_toss():
+                print "    Payback! {" + target.description() + "} will attempt " + skill.description() + " on {" + card.description() + "}"
+                opposing_board.perform_activation_skill_on_target(target, skill, card, self, can_payback=False)
 
     def commander_target(self):
         for card in self._active_structures:

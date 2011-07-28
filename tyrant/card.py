@@ -11,6 +11,13 @@ class Card:
         self._skills = skills
         self._rarity = rarity
         self._unique = unique
+        self._activation_skills = [skill for skill in self._skills if skill.is_activation_skill()]
+        self._evade = self.has_skill("evade")
+        self._payback = self.has_skill("payback")
+        self._flying = self.has_skill("flying")
+        self._armored = self.skill_value("armored")
+        self._regenerate = self.skill_value("regenerate")
+        self._counter = self.skill_value("counter")
 
     def type(self):
         return self._type
@@ -41,25 +48,25 @@ class Card:
         return next((skill for skill in self._skills if skill.name() == skill_name), None) != None
 
     def activation_skills(self):
-        return [skill for skill in self._skills if skill.is_activation_skill()]
+        return self._activation_skills
 
     def evade(self):
-        return self.has_skill("evade")
+        return self._evade
 
     def payback(self):
-        return self.has_skill("payback")
+        return self._payback
 
     def flying(self):
-        return self.has_skill("flying")
+        return self._flying
 
     def armored(self):
-        return self.skill_value("armored")
+        return self._armored
 
     def regenerate(self):
-        return self.skill_value("regenerate")
+        return self._regenerate
 
     def counter(self):
-        return self.skill_value("counter")
+        return self._counter
 
     def rarity_and_faction_string(self):
         if self.rarity() == "Legendary":
@@ -90,39 +97,54 @@ class AssaultCard(Card):
         self._health = health
         self._attack = attack
         self._delay = delay
+        self._fear = self.has_skill("fear")
+        self._swipe = self.has_skill("swipe")
+        self._flurry = self.skill_value("flurry")
+        self._valor = self.skill_value("valor")
+        self._antiair = self.skill_value("antiair")
+        self._pierce = self.skill_value("pierce")
+        self._immobilize = self.has_skill("immobilize")
+        self._poison = self.skill_value("poison")
+        self._crush = self.skill_value("crush")
+        self._leech = self.skill_value("leech")
+        self._siphon = self.skill_value("siphon")
+        self._activation_skills_for_mimic = [skill.unrestricted_version() for skill in self.activation_skills()]
+
+    def activation_skills_for_mimic(self):
+        return self._activation_skills_for_mimic
 
     def fear(self):
-        return self.has_skill("fear")
+        return self._fear
 
     def swipe(self):
-        return self.has_skill("swipe")
+        return self._swipe
 
     def flurry(self):
-        return self.skill_value("flurry")
+        return self._flurry
 
     def valor(self):
-        return self.skill_value("valor")
+        return self._valor
 
     def antiair(self):
-        return self.skill_value("antiair")
+        return self._antiair
 
     def pierce(self):
-        return self.skill_value("pierce")
+        return self._pierce
 
     def immobilize(self):
-        return self.has_skill("immobilize")
+        return self._immobilize
 
     def poison(self):
-        return self.skill_value("poison")
+        return self._poison
 
     def crush(self):
-        return self.skill_value("crush")
+        return self._crush
 
     def leech(self):
-        return self.skill_value("leech")
+        return self._leech
 
     def siphon(self):
-        return self.skill_value("siphon")
+        return self._siphon
 
     def health(self):
         return self._health
@@ -154,6 +176,7 @@ class StructureCard(Card):
         Card.__init__(self, name, faction, "structure", skills, rarity, unique)
         self._health = health
         self._delay = delay
+        self._wall = self.has_skill("wall")
 
     def health(self):
         return self._health
@@ -162,7 +185,7 @@ class StructureCard(Card):
         return self._delay
 
     def is_wall(self):
-        return self.has_skill("wall")
+        return self._wall
 
     def description(self):
         return self.name() + " (" + str(self.rarity_and_faction_string()) + ")  [" + str(self.health()) + "hp / " + str(self.delay()) + " | "  + self.skill_description() + "]"

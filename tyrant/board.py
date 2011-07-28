@@ -1,5 +1,5 @@
 
-import random
+from random import choice, shuffle, randint
 from tyrant.card_in_play import CommanderCardInPlay, AssaultCardInPlay, StructureCardInPlay, coin_toss
 from tyrant.log import log_enabled, log
 
@@ -8,7 +8,7 @@ class Board:
         self._deck = deck
         self._commander = CommanderCardInPlay(deck.commander())
         self._draw_pile = deck.cards()[:]
-        random.shuffle(self._draw_pile)
+        shuffle(self._draw_pile)
         self._hand = []
         self._active_structures = []
         self._active_assault_units = []
@@ -43,7 +43,7 @@ class Board:
     def activate_assault_units(self, opposing_board):
         for i in range(0, len(self._active_assault_units)):
             card = self._active_assault_units[i]
-            if card.is_active():
+            if card.is_active() and card.can_use_skills():
                 self.perform_activation_skills(card, opposing_board)
                 self.perform_attack(i, card, opposing_board)
 
@@ -59,8 +59,6 @@ class Board:
         self.activate_assault_units(opposing_board)
 
     def perform_activation_skills(self, card, opposing_board):
-        if card.cannot_use_skills():
-            return
         self.perform_activation_skill_list(card, card.activation_skills(), opposing_board)
 
     def perform_activation_skill_list(self, card, skills, opposing_board):
@@ -69,22 +67,25 @@ class Board:
 
     def perform_one_activation_skill(self, card, skill, opposing_board):
         targets = self.get_target_list_for_skill(skill, opposing_board)
-        for target in targets:
-            self.perform_activation_skill_on_target(card, skill, target, opposing_board)
+        if skill.all():
+            for target in targets:
+                self.perform_activation_skill_on_target(card, skill, target, opposing_board)
+        elif targets:
+                self.perform_activation_skill_on_target(card, skill, choice(targets), opposing_board)
 
     def get_target_list_for_skill(self, skill, opposing_board):
         targeting = skill.targeting()
 
-        if targeting == "friendly wounded":
+        if targeting == "hostile":
+            targets = [card for card in opposing_board.active_assault_units() if not card.is_dead()]
+        elif targeting == "hostile ready":
+            targets = [card for card in opposing_board.active_assault_units() if card.is_ready_next_turn()]
+        elif targeting == "friendly wounded":
             targets = [card for card in self._active_assault_units if card.is_wounded()]
         elif targeting == "friendly active":
             targets = [card for card in self._active_assault_units if card.is_active()]
-        elif targeting == "hostile":
-            targets = [card for card in opposing_board.active_assault_units()]
-        elif targeting == "hostile ready":
-            targets = [card for card in opposing_board.active_assault_units() if card.is_ready_next_turn()]
         elif targeting == "hostile structure":
-            targets = [card for card in opposing_board.active_structures()]
+            targets = [card for card in opposing_board.active_structures() if not card.is_dead()]
 
         target_faction = skill.target_faction()
         if target_faction:
@@ -92,8 +93,6 @@ class Board:
 
         if skill.all():
             return targets
-        else:
-            return [random.choice(targets)] if targets else []
         
     def perform_activation_skill_on_target(self, card, skill, target, opposing_board, can_payback=True):
         # Enfeeble, Heal, Jam, Mimic, Rally, Siege, Strike, Weaken
@@ -110,27 +109,12 @@ class Board:
         can_payback = can_payback and hostile
 
         skill_name = skill.name()
-        if skill_name == "enfeeble":
-            target.suffer_enfeeble(skill.value())
-        elif skill_name == "heal":
+        if skill_name == "heal":
             target.heal(skill.value())
-        elif skill_name == "jam":
-            if coin_toss():
-                target.suffer_jam()
-            else:
-                if log_enabled(): log("    Jam failed on {" + target.description() + "}")
-                # no chance for payback if it misses
-                can_payback = False
-        elif skill_name == "mimic":
-            # XXX - implement mimic
-            mimiced_skills = [skill.unrestricted_version() for skill in target.activation_skills()]
-            self.perform_activation_skill_list(card, mimiced_skills, opposing_board)
-            can_payback = False
+        elif skill_name == "weaken":
+            target.weaken(skill.value())
         elif skill_name == "rally":
             target.rally(skill.value())
-        elif skill_name == "siege":
-            target.take_damage(skill.value())
-            can_payback = False
         elif skill_name == "strike":
             damage = skill.value()
             enfeebled = target.enfeebled()
@@ -138,8 +122,22 @@ class Board:
                 damage += enfeebled
                 if log_enabled(): log("    Enfeeble bonus damage: " + str(enfeebled))
             target.take_damage(damage)
-        elif skill_name == "weaken":
-            target.weaken(skill.value())
+        elif skill_name == "siege":
+            target.take_damage(skill.value())
+            can_payback = False
+        elif skill_name == "jam":
+            if coin_toss():
+                target.suffer_jam()
+            else:
+                if log_enabled(): log("    Jam failed on {" + target.description() + "}")
+                # no chance for payback if it misses
+                can_payback = False
+        elif skill_name == "enfeeble":
+            target.suffer_enfeeble(skill.value())
+        elif skill_name == "mimic":
+            mimiced_skills = target.activation_skills_for_mimic()
+            self.perform_activation_skill_list(card, mimiced_skills, opposing_board)
+            can_payback = False
 
         if log_enabled(): log("  --Final skill target status: {" + target.description() + "}")
 
@@ -190,10 +188,14 @@ class Board:
 
                 if left_target or right_target:
                     if log_enabled(): log("=== Swipe Attack center ===")
+                    if attacker.cannot_attack():
+                        return
                 self.perform_attack_on_target(main_target, attacker, opposing_board)
 
                 if right_target:
                     if log_enabled(): log("=== Swipe Attack right ===")
+                    if attacker.cannot_attack():
+                        return
                     self.perform_attack_on_target(right_target, attacker, opposing_board)
             else:
                 self.perform_attack_on_target(opposing_board.commander_target(), attacker, opposing_board)
@@ -208,15 +210,15 @@ class Board:
             attacks += flurry
             if log_enabled(): log("    Flurry! performing " + str(attacks) + " total attacks")
 
-        for i in range(1, attacks + 1):
-            if log_enabled(): 
-                if attacks > 1: log("=== Attack \#" + str(i) + " ===")
+            for i in range(1, attacks + 1):
+                if i > 0 and attacker.cannot_attack():
+                    return
+                if log_enabled(): log("=== Attack \#" + str(i) + " ===")
+                self.perform_single_attack_on_target(target, attacker, opposing_board)
+        else:
             self.perform_single_attack_on_target(target, attacker, opposing_board)
-            
-    def perform_single_attack_on_target(self, target, attacker, opposing_board):
-        if attacker.cannot_attack():
-            return
 
+    def perform_single_attack_on_target(self, target, attacker, opposing_board):
         damage = attacker.attack()
         if log_enabled(): log("    Base damage (including rally/weaken): " + str(damage))
 
@@ -333,18 +335,17 @@ class Board:
         while len(self._hand) < 3 and self._draw_pile: 
             self.draw()
         if self._hand:
-            self.play_from_hand(random.randint(0, len(self._hand) - 1))
+            self.play_from_hand(choice(self._hand))
         self.activate_cards(opposing_board)
         self.clean_up(opposing_board)
         return opposing_board.commander().is_dead()
 
-    def play_from_hand(self, index):
-        card_to_play = self._hand[index]
+    def play_from_hand(self, card_to_play):
         self._hand.remove(card_to_play)
         if log_enabled(): log("  Playing card: {" + card_to_play.description() + "}")
-        if card_to_play.type() == "action":
-            self._active_action = card_to_play
+        if card_to_play.type() == "assault":
+            self._active_assault_units.append(AssaultCardInPlay(card_to_play))
         elif card_to_play.type() == "structure":
             self._active_structures.append(StructureCardInPlay(card_to_play))
         else:
-            self._active_assault_units.append(AssaultCardInPlay(card_to_play))
+            self._active_action = card_to_play

@@ -2,7 +2,7 @@
 from string import join
 import random
 
-from log import is_logging, log
+from log import log_enabled, log
 
 
 def coin_toss():
@@ -26,9 +26,8 @@ class CardInPlay:
         regenerate = self.regenerate()
         if died and regenerate > 0:
             if coin_toss():                
-                if is_logging: log("    Regenerate! Unit {" + self.description() + "} will regenerate to " + str(regenerate))
+                if log_enabled(): log("    Regenerate! Unit {" + self.description() + "} will regenerate to " + str(regenerate))
                 self.perform_regenerate(regenerate)
-
 
     def heal(self, amount):
         self._cur_health = min(self._card.health(), self._cur_health + amount)
@@ -77,10 +76,10 @@ class CardInPlay:
 
     def cannot_use_skills(self):
         if self.is_dead():
-            if is_logging: log("    Can't use skills: {" + self.description() + "} is DEAD")
+            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is DEAD")
             return True
         if self.is_jammed():
-            if is_logging: log("    Can't use skills: {" + self.description() + "} is JAMMED")
+            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is JAMMED")
             return True
         return False
 
@@ -198,16 +197,16 @@ class AssaultCardInPlay(CardInPlay):
 
     def cannot_attack(self):
         if self.is_dead():
-            if is_logging: log("    Can't attack: {" + self.description() + "} is DEAD")
+            if log_enabled: log("    Can't attack: {" + self.description() + "} is DEAD")
             return True
         if self.is_jammed():
-            if is_logging: log("    Can't attack: {" + self.description() + "} is JAMMED")
+            if log_enabled: log("    Can't attack: {" + self.description() + "} is JAMMED")
             return True
         if self.is_immobilized():
-            if is_logging: log("    Can't attack: {" + self.description() + "} is IMMOBILIZED")
+            if log_enabled: log("    Can't attack: {" + self.description() + "} is IMMOBILIZED")
             return True
         if self.attack() <= 0:
-            if is_logging: log("    Can't attack: {" + self.description() + "} has attack " + str(self.attack()))
+            if log_enabled: log("    Can't attack: {" + self.description() + "} has attack " + str(self.attack()))
             return True
         return False
 

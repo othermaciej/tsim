@@ -5,6 +5,7 @@ import argparse
 from tyrant.card_collection import CardCollection
 from tyrant.deck import Deck
 from tyrant.battle import Battle
+from tyrant.log import set_logging
 
 def process_arguments():
     parser = argparse.ArgumentParser(description='Simulate tyrant battles.')
@@ -33,6 +34,7 @@ def main():
 
     if args.logging:
         print "== Logging enabled. =="
+        set_logging(True)
 
     print "\nOffense: " + args.off_deck[0]
     deck1 = Deck(args.off_deck[0], collection)

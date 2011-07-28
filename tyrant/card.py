@@ -11,7 +11,7 @@ class Card:
         self._skills = skills
         self._rarity = rarity
         self._unique = unique
-        self._activation_skills = [skill for skill in self._skills if skill.is_activation_skill()]
+        self._activation_skills = [skill for skill in self._skills if skill.is_activation_skill() and not skill.name() == "mimic"]
         self._evade = self.has_skill("evade")
         self._payback = self.has_skill("payback")
         self._flying = self.has_skill("flying")

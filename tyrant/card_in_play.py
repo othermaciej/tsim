@@ -92,7 +92,7 @@ class CommanderCardInPlay(CardInPlay):
         CardInPlay.__init__(self, card)
 
     def description(self):
-        return self._card._description + " cur: " + str(self.health()) + "hp";
+        return self._card.description() + " cur: " + str(self.health()) + "hp";
 
 class AssaultCardInPlay(CardInPlay):
     def __init__(self, card):
@@ -117,7 +117,7 @@ class AssaultCardInPlay(CardInPlay):
         return self._cur_delay == 0
 
     def is_ready_next_turn(self):
-        return self._cur_delay <= 1
+        return self._cur_delay <= 1 and not self._jammed
 
     def tick(self):
         if self._cur_delay > 0:
@@ -201,10 +201,10 @@ class AssaultCardInPlay(CardInPlay):
 
     def cannot_attack(self):
         if self._cur_health <= 0:
-            if log_enabled: log("    Can't attack: {" + self.description() + "} is DEAD")
+            if log_enabled(): log("    Can't attack: {" + self.description() + "} is DEAD")
             return True
         if self._jammed:
-            if log_enabled: log("    Can't attack: {" + self.description() + "} is JAMMED")
+            if log_enabled(): log("    Can't attack: {" + self.description() + "} is JAMMED")
             return True
         if self._immobilized:
             if log_enabled(): log("    Can't attack: {" + self.description() + "} is IMMOBILIZED")

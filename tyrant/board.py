@@ -105,7 +105,7 @@ class Board:
                 if log_enabled(): log("  --Final skill target status: {" + target.description() + "}")
                 return
 
-        can_payback = can_payback and hostile
+        can_payback = can_payback and hostile and card.type() == "assault"
 
         skill_name = skill.name()
         if skill_name == "heal":
@@ -316,7 +316,7 @@ class Board:
         if log_enabled(): log("  Cleaning up")
         self.bury_the_dead()
         opposing_board.bury_the_dead()
-        self.action_card = None
+        self._active_action = None
         self.reset_status();
 
     def commander(self):

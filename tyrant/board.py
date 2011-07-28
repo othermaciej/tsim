@@ -91,8 +91,7 @@ class Board:
         if target_faction:
             targets = [card for card in targets if card.faction() == target_faction]
 
-        if skill.all():
-            return targets
+        return targets
         
     def perform_activation_skill_on_target(self, card, skill, target, opposing_board, can_payback=True):
         # Enfeeble, Heal, Jam, Mimic, Rally, Siege, Strike, Weaken

@@ -2,7 +2,7 @@
 from tyrant.card_file_parser import parse_card_file
 
 def print_cards(label, cardList, showCount = True):
-    print label + ":" + (" " + str(len(cardList)) if showCount else "")
+    print "  " + label + ":" + (" " + str(len(cardList)) if showCount else "")
     for card in cardList:
         print "    " + card.description()
 

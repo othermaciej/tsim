@@ -9,6 +9,7 @@ class Deck:
         self._collection = collection
         self._commander = None
         self._cards = []
+        self._name = re.sub(r"\.deck$", "", file)
 
         f = open(file)
         saw_legendary = False
@@ -20,7 +21,7 @@ class Deck:
                 continue
 
             multiplier = 1
-            multiplier_match = re.match(r"([0-9]*) *x +(.*)", line)
+            multiplier_match = re.match("([0-9]*) *x +(.*)", line)
             if multiplier_match:
                 multiplier = atoi(multiplier_match.group(1))
                 line = multiplier_match.group(2)
@@ -28,28 +29,31 @@ class Deck:
             for i in range(multiplier):
                 card = self._collection.card_by_name(line)
                 if card == None:
-                    raise Exception("Invalid deck", "Unknown card " + line)
+                    raise Exception("Invalid deck", self._name + ": Unknown card " + line)
 
                 if card.rarity() == "Legenary":
-                    raise Exception("Invalid deck", "Only one Legendary card allowed per deck")
+                    raise Exception("Invalid deck", self._name + ": Only one Legendary card allowed per deck")
                 if card.type() == "commander":
                     if self._commander != None:
-                        raise Exception("Invalid deck", "Only one commander card allowed per deck")
+                        raise Exception("Invalid deck", self._name + ": Only one commander card allowed per deck")
                     self._commander = card
                 else:
                     if card.unique():
                         if card.name() in uniques:
-                            raise Exception("Invalid deck", "Only one of Unique card " + card.name() + " allowed per deck")
+                            raise Exception("Invalid deck", self._name + ": Only one of Unique card " + card.name() + " allowed per deck")
                         else:
                             uniques[card.name()] = card
                     self._cards.append(card)
 
         if self._commander == None:
-            raise Exception("Invalid deck", "Deck must have a commander")
+            raise Exception("Invalid deck", self._name + ": Deck must have a commander")
 
         if len(self._cards) > 10:
-            raise Exception("Invalid deck", "Deck must have no more than 10 cards")
-            
+            raise Exception("Invalid deck", self._name + ": Deck must have no more than 10 cards")
+
+    def name(self):
+        return self._name
+
     def dump(self):
         print_cards("Commander", [self._commander], False)
         print_cards("Units", self._cards, False)
@@ -59,3 +63,20 @@ class Deck:
 
     def cards(self):
         return self._cards
+
+    def count_descriptor(self, name, count):
+        return str(count) + "x " + name if count > 1 else name
+
+    def contents_summary(self):
+        counts = {}
+        unique_cards = []
+        for card in self._cards:
+            count = counts.get(card, 0)
+            if count == 0:
+                unique_cards.append(card)
+            counts[card] = count + 1
+
+        name_list = [self._commander.name()]
+        name_list.extend([self.count_descriptor(card.name(), counts[card]) for card in unique_cards])
+        return  ", ".join(name_list)
+

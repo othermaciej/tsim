@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
 import argparse
+import re
 
 from tyrant.card_collection import CardCollection
 from tyrant.deck import Deck
-from tyrant.battle import Battle
+from tyrant.deck_pool import DeckPool
+from tyrant.deck_versus_deck_test import DeckVersusDeckTest
+from tyrant.deck_versus_pool_test import DeckVersusPoolTest
 from tyrant.log import set_logging
 
 def process_arguments():
@@ -13,9 +16,12 @@ def process_arguments():
                         help='offense deck to test')
     parser.add_argument('def_deck', metavar='DEF_DECK', type=str, nargs=1,
                         help='defense deck to test')
-    parser.add_argument('-s --surge', dest='surge', action='store_const',
+    parser.add_argument('-s --surge-only', dest='surge_only', action='store_const',
                         const=True, default=False,
-                        help='test using Surge mode (default: test using Fight mode)')
+                        help='test only using Surge (default: test both Fight and Surge)')
+    parser.add_argument('-f --fight-only', dest='fight_only', action='store_const',
+                        const=True, default=False,
+                        help='test only using Fight (default: test both Fight and Surge)')
     parser.add_argument('-r --rounds', metavar='R', dest='rounds', type=int,
                         default=1000,
                         help='test matchup for R rounds (default: 1000)')
@@ -36,27 +42,45 @@ def main():
         print "== Logging enabled. =="
         set_logging(True)
 
-    print "\nOffense: " + args.off_deck[0]
-    deck1 = Deck(args.off_deck[0], collection)
-    deck1.dump()
-    print "\nDefense: " + args.def_deck[0]
-    deck2 = Deck(args.def_deck[0], collection)
-    deck2.dump()
-    print "\n"
+    offense_is_pool = re.search("\.deckpool$", args.off_deck[0])
+    defense_is_pool = re.search("\.deckpool$", args.def_deck[0])
 
-    offense_wins = 0
-    defense_wins = 0
-    rounds = args.rounds
-    for i in range(0, rounds):
-        battle = Battle(deck1, deck2, args.surge)
-        offense_won = battle.simulate()
-        if offense_won:
-            offense_wins += 1
-        else:
-            defense_wins += 1
+    if offense_is_pool:
+        offense = DeckPool(args.off_deck[0], collection)
+    else:
+        offense = Deck(args.off_deck[0], collection)
 
-    print "RESULTS:"
-    print "    " +  ("Surge" if args.surge else "Fight") + " Offense wins: " + str(offense_wins * 100.0 / rounds) + "%"
-    print "    " +  ("Surge" if args.surge else "Fight") + " Defense wins: " + str(defense_wins * 100.0 / rounds) + "%"
+    if defense_is_pool:
+        defense = DeckPool(args.def_deck[0], collection)
+    else:
+        defense = Deck(args.def_deck[0], collection)
+
+    print "\nOffense: " + offense.name()
+    print   "         " + re.sub("\n", "\n         ", offense.contents_summary())
+    print "\nDefense: " + defense.name()
+    print   "         " + re.sub("\n", "\n         ", defense.contents_summary())
+    print ""
+    
+    if offense_is_pool and defense_is_pool:
+        raise Exception("Bad parameters", "Offense and defense cannot both be deck pools")
+    elif offense_is_pool:
+        test_kind = PoolVersusDeckTest        
+    elif defense_is_pool:
+        test_kind = DeckVersusPoolTest
+    else:
+        test_kind = DeckVersusDeckTest
+        
+    if not args.surge_only:
+        test = test_kind(offense, defense, False, args.rounds)
+        test.run()
+        test.print_results()
+
+    if not args.fight_only and not args.surge_only:
+        print ""
+
+    if not args.fight_only:
+        test = test_kind(offense, defense, True, args.rounds)
+        test.run()
+        test.print_results()
 
 main()

@@ -3,11 +3,11 @@ activation_skills = {"heal", "rally", "enfeeble", "strike", "jam", "weaken", "si
 hostile_activation_skills = {"enfeeble", "strike", "jam", "weaken", "siege", "mimic"}
 
 skill_targeting = {"heal": "friendly wounded", 
-                   "rally": "friendly active", 
+                   "rally": "friendly attack-ready", 
                    "enfeeble": "hostile", 
                    "strike": "hostile",
                    "jam": "hostile ready", 
-                   "weaken": "hostile ready", 
+                   "weaken": "hostile attack-ready", 
                    "siege": "hostile structure", 
                    "mimic": "hostile"}
 

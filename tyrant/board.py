@@ -78,12 +78,14 @@ class Board:
 
         if targeting == "hostile":
             targets = [card for card in opposing_board.active_assault_units() if not card.is_dead()]
-        elif targeting == "hostile ready":
-            targets = [card for card in opposing_board.active_assault_units() if card.is_ready_next_turn()]
         elif targeting == "friendly wounded":
             targets = [card for card in self._active_assault_units if card.is_wounded()]
-        elif targeting == "friendly active":
-            targets = [card for card in self._active_assault_units if card.is_active()]
+        elif targeting == "hostile attack-ready":
+            targets = [card for card in opposing_board.active_assault_units() if card.is_ready_to_attack_next_turn()]
+        elif targeting == "friendly attack-ready":
+            targets = [card for card in self._active_assault_units if card.is_ready_to_attack()]
+        elif targeting == "hostile ready":
+            targets = [card for card in opposing_board.active_assault_units() if card.is_ready_next_turn()]
         elif targeting == "hostile structure":
             targets = [card for card in opposing_board.active_structures() if not card.is_dead()]
 
@@ -214,6 +216,8 @@ class Board:
                     return
                 if log_enabled(): log("=== Attack \#" + str(i) + " ===")
                 self.perform_single_attack_on_target(target, attacker, opposing_board)
+                if target.is_dead():
+                    target = opposing_board.commander_target()
         else:
             self.perform_single_attack_on_target(target, attacker, opposing_board)
 
@@ -236,7 +240,7 @@ class Board:
             if antiair:
                 damage += antiair
                 if log_enabled(): log("    Antiair bonus damage: " + str(antiair))
-            else:
+            elif not attacker.flying():
                 if coin_toss():
                     if log_enabled(): log("    Flying! Unit {" + attacker.description() + "} missed {" + target.description() + "}")
                     return

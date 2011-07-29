@@ -75,15 +75,6 @@ class CardInPlay:
     def counter(self):
         return self._card._counter
 
-    def can_use_skills(self):
-        if self._cur_health <= 0:
-            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is DEAD")
-            return False
-        if self._jammed:
-            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is JAMMED")
-            return False
-        return True
-
     def activation_skills(self):
         return self._card._activation_skills
 
@@ -118,6 +109,12 @@ class AssaultCardInPlay(CardInPlay):
 
     def is_ready_next_turn(self):
         return self._cur_delay <= 1 and not self._jammed
+
+    def is_ready_to_attack_next_turn(self):
+        return self._cur_delay <= 1 and not self._jammed and not self._immobilized and self._cur_attack > 0
+
+    def is_ready_to_attack(self):
+        return self._cur_delay == 0 and not self._jammed and not self._immobilized
 
     def tick(self):
         if self._cur_delay > 0:
@@ -213,6 +210,15 @@ class AssaultCardInPlay(CardInPlay):
             if log_enabled(): log("    Can't attack: {" + self.description() + "} has attack " + str(self.attack()))
             return True
         return False
+
+    def can_use_skills(self):
+        if self._cur_health <= 0:
+            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is DEAD")
+            return False
+        if self._jammed:
+            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is JAMMED")
+            return False
+        return True
 
     def status_effects_description(self):
         status_list = []

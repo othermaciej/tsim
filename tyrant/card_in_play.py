@@ -25,6 +25,9 @@ class CardInPlay:
         died = self._cur_health <= 0
         regenerate = self.regenerate()
         if died:
+            # make dead cards appear to have a very large cooldown,
+            # to reduce the need to check in quite so many places
+            # whether a card is dead.
             self._cur_cd = 999
             if regenerate > 0 and coin_toss():                
                 if log_enabled(): log("    Regenerate! Unit {" + self.description() + "} will regenerate to " + str(regenerate))

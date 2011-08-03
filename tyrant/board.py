@@ -15,14 +15,14 @@ class Board:
         self._active_action = None
 
     def draw(self):
-        if log_enabled(): log("  About to draw - draw pile size is " + str(len(self._draw_pile)))
         if self._draw_pile:
             self._hand.append(self._draw_pile.pop())
-            if log_enabled(): log("  Drew: {" + self._hand[-1].description() + "}")
-            if log_enabled(): log("   - hand size is now " + str(len(self._hand)))
+            if log_enabled(): 
+                log("    Drew: {" + self._hand[-1].description() + "}")
+                log("    Hand size: " + str(len(self._hand)) + " | Draw pile size: "  + str(len(self._draw_pile)))
 
     def tick_timers(self):
-        if log_enabled(): log("  Ticking timers")
+        if log_enabled(): log("  Ticking Timers")
         for card in self._active_structures:
             card.tick()
         for card in self._active_assault_units:
@@ -30,22 +30,33 @@ class Board:
 
     def activate_action(self, opposing_board):
         if self._active_action:
+            if log_enabled(): log("    Activating Action {" + self._active_action.description() + "}")
             self.perform_activation_skills(self._active_action, opposing_board)
 
     def activate_commander(self, opposing_board):
+        if log_enabled(): log("    Activating Commander {" + self._commander.description() + "}")
         self.perform_activation_skills(self._commander, opposing_board)
 
     def activate_structures(self, opposing_board):
-        for card in self._active_structures:
+        for i in range(0, len(self._active_structures)):
+            card = self._active_structures[i]
+            if log_enabled(): 
+                log("    Activating Structure [" + str(i) + "] {" + card.description() + "}")
             if card.is_active():
                 self.perform_activation_skills(card, opposing_board)
+            elif log_enabled():
+                log("      (structure is not ready)")
 
     def activate_assault_units(self, opposing_board):
         for i in range(0, len(self._active_assault_units)):
             card = self._active_assault_units[i]
+            if log_enabled(): 
+                log("    Activating Assault Unit [" + str(i) + "] {" + card.description() + "}")
             if card.is_active() and card.can_use_skills():
                 self.perform_activation_skills(card, opposing_board)
                 self.perform_attack(i, card, opposing_board)
+            elif log_enabled():
+                log("      (unit is not ready)")
 
     def reset_status(self):
         for card in self._active_assault_units:
@@ -66,7 +77,12 @@ class Board:
             self.perform_one_activation_skill(card, skill, opposing_board)
 
     def perform_one_activation_skill(self, card, skill, opposing_board):
+        if log_enabled(): log("      Performing skill " + skill.description())
         targets = self.get_target_list_for_skill(skill, opposing_board)
+        if log_enabled():
+            if not targets:
+                if log_enabled(): log("        (No valid targets)")
+        
         if skill.all():
             for target in targets:
                 self.perform_activation_skill_on_target(card, skill, target, opposing_board)
@@ -99,12 +115,12 @@ class Board:
         # Enfeeble, Heal, Jam, Mimic, Rally, Siege, Strike, Weaken
         # Account for: Evade, Payback, Regenerate
 
-        if log_enabled(): log("    Activation Skill: {" + card.description() + "} will perform " + skill.description() + " on {" + target.description() + "}")
+        if log_enabled(): log("        Skill target is: {" + target.description() + "}")
         hostile = skill.is_hostile_activation_skill()
         if hostile and target.evade():
             if coin_toss():
-                if log_enabled(): log("    Evade! {" + target.description() + "} evaded " + skill.description())
-                if log_enabled(): log("  --Final skill target status: {" + target.description() + "}")
+                if log_enabled(): log("        Evade! {" + target.description() + "} evaded " + skill.description())
+                if log_enabled(): log("      --Final skill target status: {" + target.description() + "}")
                 return
 
         can_payback = can_payback and hostile and card.type() == "assault"
@@ -121,7 +137,7 @@ class Board:
             enfeebled = target.enfeebled()
             if enfeebled > 0:
                 damage += enfeebled
-                if log_enabled(): log("    Enfeeble bonus damage: " + str(enfeebled))
+                if log_enabled(): log("        Enfeeble bonus damage: " + str(enfeebled))
             target.take_damage(damage)
         elif skill_name == "siege":
             target.take_damage(skill.value())
@@ -130,7 +146,7 @@ class Board:
             if coin_toss():
                 target.suffer_jam()
             else:
-                if log_enabled(): log("    Jam failed on {" + target.description() + "}")
+                if log_enabled(): log("        Jam failed on {" + target.description() + "}")
                 # no chance for payback if it misses
                 can_payback = False
         elif skill_name == "enfeeble":
@@ -140,11 +156,11 @@ class Board:
             self.perform_activation_skill_list(card, mimiced_skills, opposing_board)
             can_payback = False
 
-        if log_enabled(): log("  --Final skill target status: {" + target.description() + "}")
+        if log_enabled(): log("      --Final skill target status: {" + target.description() + "}")
 
         if target.payback() and can_payback:
             if coin_toss():
-                if log_enabled(): log("    Payback! {" + target.description() + "} will attempt " + skill.description() + " on {" + card.description() + "}")
+                if log_enabled(): log("        Payback! {" + target.description() + "} will attempt " + skill.description() + " on {" + card.description() + "}")
                 opposing_board.perform_activation_skill_on_target(target, skill, card, self, can_payback=False)
 
     def commander_target(self):
@@ -172,6 +188,8 @@ class Board:
     def perform_attack(self, index, attacker, opposing_board):
         # Attack Jammed = Attacker Immobilized = Attacker weakened to 0 > Swipe check > Flurry check > Fear >  Enfeeble = Valor > Flying = Antiair > Armored = Pierce > Immobilize = Poison > Count Damage > Crush > Defender Regenerate > Counter > Attacker Regenerate = Leech > Siphon > Flurry Repeat > Swipe Repeat
 
+        if log_enabled(): log("      Performing attack")
+
         if attacker.cannot_attack():
             return
 
@@ -184,17 +202,17 @@ class Board:
                 left_target = opposing_board.non_commander_target_for_index(index - 1)
                 right_target = opposing_board.non_commander_target_for_index(index + 1)
                 if left_target:
-                    if log_enabled(): log("=== Swipe Attack left ===")
+                    if log_enabled(): log("      === Swipe Attack left ===")
                     self.perform_attack_on_target(left_target, attacker, opposing_board)
 
                 if left_target or right_target:
-                    if log_enabled(): log("=== Swipe Attack center ===")
+                    if log_enabled(): log("      === Swipe Attack center ===")
                     if attacker.cannot_attack():
                         return
                 self.perform_attack_on_target(main_target, attacker, opposing_board)
 
                 if right_target:
-                    if log_enabled(): log("=== Swipe Attack right ===")
+                    if log_enabled(): log("      === Swipe Attack right ===")
                     if attacker.cannot_attack():
                         return
                     self.perform_attack_on_target(right_target, attacker, opposing_board)
@@ -209,12 +227,12 @@ class Board:
         flurry = attacker.flurry()
         if flurry > 0 and coin_toss():
             attacks += flurry
-            if log_enabled(): log("    Flurry! performing " + str(attacks) + " total attacks")
+            if log_enabled(): log("      Flurry! performing " + str(attacks) + " total attacks")
 
             for i in range(1, attacks + 1):
                 if i > 0 and attacker.cannot_attack():
                     return
-                if log_enabled(): log("=== Attack \#" + str(i) + " ===")
+                if log_enabled(): log("      === Attack \#" + str(i) + " ===")
                 self.perform_single_attack_on_target(target, attacker, opposing_board)
                 if target.is_dead():
                     target = opposing_board.commander_target()
@@ -222,45 +240,47 @@ class Board:
             self.perform_single_attack_on_target(target, attacker, opposing_board)
 
     def perform_single_attack_on_target(self, target, attacker, opposing_board):
+        if log_enabled(): log("        Attack target is: {" + attacker.description() + "}")
+
         damage = attacker.attack()
-        if log_enabled(): log("    Base damage (including rally/weaken): " + str(damage))
+        if log_enabled(): log("        Base damage (including rally/weaken): " + str(damage))
 
         enfeebled = target.enfeebled()
         if enfeebled > 0:
             damage += enfeebled
-            if log_enabled(): log("    Enfeeble bonus damage: " + str(enfeebled))
+            if log_enabled(): log("         Enfeeble bonus damage: " + str(enfeebled))
 
         valor = attacker.valor()
         if valor > 0 and self.assault_count() < opposing_board.assault_count():
             damage += valor
-            if log_enabled(): log("    Valor bonus damage: " + str(valor))
+            if log_enabled(): log("        Valor bonus damage: " + str(valor))
 
         if target.flying():
             antiair = attacker.antiair()
             if antiair:
                 damage += antiair
-                if log_enabled(): log("    Antiair bonus damage: " + str(antiair))
+                if log_enabled(): log("        Antiair bonus damage: " + str(antiair))
             elif not attacker.flying():
                 if coin_toss():
-                    if log_enabled(): log("    Flying! Unit {" + attacker.description() + "} missed {" + target.description() + "}")
+                    if log_enabled(): log("         Flying! Unit {" + attacker.description() + "} missed {" + target.description() + "}")
                     return
 
         armor = target.armored()
         if armor > 0:
             pierce = attacker.pierce()
             if pierce:
-                if log_enabled(): log("    Armor reduced from " + str(armor) + " by pierce " + str(pierce))
+                if log_enabled(): log("        Armor reduced from " + str(armor) + " by pierce " + str(pierce))
                 armor = max(0, armor - pierce)
-            if log_enabled(): log("    Damage reduced by armor: " + str(armor))
+            if log_enabled(): log("        Damage reduced by armor: " + str(armor))
             damage -= armor
 
         if damage <= 0:
-            if log_enabled(): log("    Blocked: {" + attacker.description() + "} has modified damage " + str(attacker.attack()))
+            if log_enabled(): log("        Blocked: {" + attacker.description() + "} has modified damage " + str(attacker.attack()))
             return
 
         if attacker.immobilize():
             if coin_toss():
-                if log_enabled(): log("    Immobilize! Unit {" + attacker.description() + "} immobilizes {" + target.description() + "}")
+                if log_enabled(): log("        Immobilize! Unit {" + attacker.description() + "} immobilizes {" + target.description() + "}")
                 target.suffer_immobilize()
     
         poison = attacker.poison()
@@ -269,41 +289,41 @@ class Board:
             target.suffer_poison(poison)
 
         target_died = target.take_damage(damage)
-        if log_enabled(): log("    Unit {" + attacker.description() + "} does " + str(damage) + " attack damage to {" + target.description() + "}")
+        if log_enabled(): log("        Unit {" + attacker.description() + "} does " + str(damage) + " attack damage to {" + target.description() + "}")
 
         crush = attacker.crush()
         if crush > 0 and target_died:
             crush_target = opposing_board.commander_target()
-            if log_enabled(): log("    Crush! Unit {" + attacker.description() + "} does {" + str(damage) + "} crush damage to {" + crush_target.description() + "}")
+            if log_enabled(): log("        Crush! Unit {" + attacker.description() + "} does {" + str(damage) + "} crush damage to {" + crush_target.description() + "}")
             crush_target.take_damage(damage)
-            if log_enabled(): log("  --Final crushed unit status: {" + crush_target.description() + "}")
+            if log_enabled(): log("      --Final crushed unit status: {" + crush_target.description() + "}")
 
         counter = target.counter()
         if counter > 0:
-            if log_enabled(): log("    Unit {" + attacker.description() + "} suffers " + str(counter) + " counter damage from {" + target.description() + "}")
+            if log_enabled(): log("        Unit {" + attacker.description() + "} suffers " + str(counter) + " counter damage from {" + target.description() + "}")
             attacker.take_damage(counter)
 
         target_is_assault = target.type() == "assault"
         leech = attacker.leech()
         if leech > 0 and target_is_assault and not attacker.is_dead():
-            if log_enabled(): log("    Leech! Unit {" + attacker.description() + "} leeches for " + str(leech) + "hp")
+            if log_enabled(): log("        Leech! Unit {" + attacker.description() + "} leeches for " + str(leech) + "hp")
             attacker.heal(leech)
 
         siphon = attacker.siphon()
         if siphon > 0 and target_is_assault:
-            if log_enabled(): log("    Siphon! Commander {" + self._commander.description() + "} receives siphon for " + str(siphon) + "hp from {" + attacker.description() + "}")
+            if log_enabled(): log("        Siphon! Commander {" + self._commander.description() + "} receives siphon for " + str(siphon) + "hp from {" + attacker.description() + "}")
             self._commander.heal(siphon)
 
-        if log_enabled(): log("  --Final attacking unit status: {" + attacker.description() + "}")
-        if log_enabled(): log("  --Final defending unit status: {" + target.description() + "}")
+        if log_enabled(): log("      --Final attacking unit status: {" + attacker.description() + "}")
+        if log_enabled(): log("      --Final defending unit status: {" + target.description() + "}")
 
     def apply_poison(self):
         # FIXME: when exactly is poison applied?
         for card in self._active_assault_units:
             if card.poisoned() > 0:
-                if log_enabled(): log("    Poison damage! Poisoned unit {" + card.description() + "} will suffer " + str(card.poisoned()) + " poison damage")
+                if log_enabled(): log("        Poison damage! Poisoned unit {" + card.description() + "} will suffer " + str(card.poisoned()) + " poison damage")
                 card.apply_poison()
-                if log_enabled(): log("  --Final poisoned unit status: {" + card.description() + "}")
+                if log_enabled(): log("      --Final poisoned unit status: {" + card.description() + "}")
 
     def bury_the_dead(self):
         for card in self._active_structures:
@@ -335,6 +355,7 @@ class Board:
     def play_random_turn(self, opposing_board):
         self.apply_poison()
         self.tick_timers()
+        if log_enabled(): log("  Drawing")
         while len(self._hand) < 3 and self._draw_pile: 
             self.draw()
         if self._hand:

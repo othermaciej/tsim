@@ -30,7 +30,7 @@ class CardInPlay:
             # whether a card is dead.
             self._cur_cd = 999
             if regenerate > 0 and coin_toss():                
-                if log_enabled(): log("    Regenerate! Unit {" + self.description() + "} will regenerate to " + str(regenerate))
+                if log_enabled(): log("        Regenerate! Unit {" + self.description() + "} will regenerate to " + str(regenerate))
                 self.perform_regenerate(regenerate)
 
     def heal(self, amount):
@@ -201,25 +201,25 @@ class AssaultCardInPlay(CardInPlay):
 
     def cannot_attack(self):
         if self._cur_health <= 0:
-            if log_enabled(): log("    Can't attack: {" + self.description() + "} is DEAD")
+            if log_enabled(): log("        Can't attack: {" + self.description() + "} is DEAD")
             return True
         if self._jammed:
-            if log_enabled(): log("    Can't attack: {" + self.description() + "} is JAMMED")
+            if log_enabled(): log("        Can't attack: {" + self.description() + "} is JAMMED")
             return True
         if self._immobilized:
-            if log_enabled(): log("    Can't attack: {" + self.description() + "} is IMMOBILIZED")
+            if log_enabled(): log("        Can't attack: {" + self.description() + "} is IMMOBILIZED")
             return True
         if self._cur_attack <= 0:
-            if log_enabled(): log("    Can't attack: {" + self.description() + "} has attack " + str(self.attack()))
+            if log_enabled(): log("        Can't attack: {" + self.description() + "} has attack " + str(self.attack()))
             return True
         return False
 
     def can_use_skills(self):
         if self._cur_health <= 0:
-            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is DEAD")
+            if log_enabled(): log("        Can't use skills: {" + self.description() + "} is DEAD")
             return False
         if self._jammed:
-            if log_enabled(): log("    Can't use skills: {" + self.description() + "} is JAMMED")
+            if log_enabled(): log("        Can't use skills: {" + self.description() + "} is JAMMED")
             return False
         return True
 

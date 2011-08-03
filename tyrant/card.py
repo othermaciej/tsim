@@ -11,7 +11,7 @@ class Card:
         self._skills = skills
         self._rarity = rarity
         self._unique = unique
-        self._activation_skills = [skill for skill in self._skills if skill.is_activation_skill() and not skill.name() == "mimic"]
+        self._activation_skills = [skill for skill in self._skills if skill.is_activation_skill()]
         self._evade = self.has_skill("evade")
         self._payback = self.has_skill("payback")
         self._flying = self.has_skill("flying")
@@ -108,7 +108,7 @@ class AssaultCard(Card):
         self._crush = self.skill_value("crush")
         self._leech = self.skill_value("leech")
         self._siphon = self.skill_value("siphon")
-        self._activation_skills_for_mimic = [skill.unrestricted_version() for skill in self.activation_skills()]
+        self._activation_skills_for_mimic = [skill.unrestricted_version() for skill in self.activation_skills() if not skill.name() == "mimic"]
 
     def activation_skills_for_mimic(self):
         return self._activation_skills_for_mimic

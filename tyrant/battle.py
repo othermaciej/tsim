@@ -18,10 +18,10 @@ class Battle:
         commander_killed = False
         while turn <= 50 and not commander_killed:
             if self.is_offense_turn(turn):
-                if log_enabled(): log("Turn " + str(turn) + " | Offense plays ------------------------")
+                if log_enabled(): log("Turn " + str(turn) + " | OFFENSE plays ------------------------")
                 commander_killed = self._offense_board.play_random_turn(self._defense_board)
             else:
-                if log_enabled(): log("Turn " + str(turn) + " | Defense plays ------------------------")
+                if log_enabled(): log("Turn " + str(turn) + " | DEFENSE plays ------------------------")
                 commander_killed = self._defense_board.play_random_turn(self._offense_board)
             turn += 1
         if log_enabled():

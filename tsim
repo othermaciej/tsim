@@ -8,6 +8,7 @@ from tyrant.deck import Deck
 from tyrant.deck_pool import DeckPool
 from tyrant.deck_versus_deck_test import DeckVersusDeckTest
 from tyrant.deck_versus_pool_test import DeckVersusPoolTest
+from tyrant.pool_versus_deck_test import PoolVersusDeckTest
 from tyrant.log import set_logging
 
 def process_arguments():

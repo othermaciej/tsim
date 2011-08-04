@@ -3,6 +3,7 @@ from string import atoi
 import re
 
 from tyrant.card_collection import print_cards
+from tyrant.card_aliases import CardAliases
 
 class Deck:
     def __init__(self, file, collection):
@@ -27,7 +28,8 @@ class Deck:
                 line = multiplier_match.group(2)
 
             for i in range(multiplier):
-                card = self._collection.card_by_name(line)
+                true_name = CardAliases.true_name(line)
+                card = self._collection.card_by_name(true_name)
                 if card == None:
                     raise Exception("Invalid deck", self._name + ": Unknown card " + line)
 
@@ -76,7 +78,7 @@ class Deck:
                 unique_cards.append(card)
             counts[card] = count + 1
 
-        name_list = [self._commander.name()]
-        name_list.extend([self.count_descriptor(card.name(), counts[card]) for card in unique_cards])
+        name_list = [CardAliases.preferred_name(self._commander.name())]
+        name_list.extend([self.count_descriptor(CardAliases.preferred_name(card.name()), counts[card]) for card in unique_cards])
         return  ", ".join(name_list)
 

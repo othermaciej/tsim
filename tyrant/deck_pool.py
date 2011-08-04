@@ -21,7 +21,7 @@ class DeckPool:
         return self._name
 
     def contents_summary(self):
-        return "\n".join([deck.name() for deck in self._decks])
+        return "\n".join([deck.name() + ":     " + deck.contents_summary() for deck in self._decks])
 
     def decks(self):
         return self._decks

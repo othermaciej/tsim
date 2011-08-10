@@ -240,7 +240,7 @@ class Board:
             self.perform_single_attack_on_target(target, attacker, opposing_board)
 
     def perform_single_attack_on_target(self, target, attacker, opposing_board):
-        if log_enabled(): log("        Attack target is: {" + attacker.description() + "}")
+        if log_enabled(): log("        Attack target is: {" + target.description() + "}")
 
         damage = attacker.attack()
         if log_enabled(): log("        Base damage (including rally/weaken): " + str(damage))
@@ -275,7 +275,7 @@ class Board:
             damage -= armor
 
         if damage <= 0:
-            if log_enabled(): log("        Blocked: {" + attacker.description() + "} has modified damage " + str(attacker.attack()))
+            if log_enabled(): log("        Blocked: {" + attacker.description() + "} has modified damage " + str(damage))
             return
 
         if attacker.immobilize():
@@ -285,7 +285,7 @@ class Board:
     
         poison = attacker.poison()
         if poison > 0:
-            if log_enabled(): log("    Poison! Unit {" + attacker.description() + "} inflicts " + str(poison) + " poison on target {" + target.description() + "}")
+            if log_enabled(): log("        Poison! Unit {" + attacker.description() + "} inflicts " + str(poison) + " poison on target {" + target.description() + "}")
             target.suffer_poison(poison)
 
         target_died = target.take_damage(damage)

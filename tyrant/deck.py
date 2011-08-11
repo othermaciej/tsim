@@ -11,6 +11,7 @@ class Deck:
         self._commander = None
         self._cards = []
         self._name = re.sub(r"\.deck$", "", file)
+        self._name = re.sub(r"^.*/", "", self._name)
 
         f = open(file)
         saw_legendary = False

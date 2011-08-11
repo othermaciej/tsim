@@ -7,6 +7,9 @@ class DeckPool:
     def __init__(self, file, collection):
         self._decks = []
         self._name = re.sub(r"\.deckpool$", "", file)
+        self._name = re.sub(r"^.*/", "", self._name)
+        self._path = re.sub(r"[^/]*$", "", file)
+
         
         f = open(file)
 
@@ -15,7 +18,8 @@ class DeckPool:
             if line == "" or line[0] == "#":
                 continue
 
-            self._decks.append(Deck(line, collection))
+            deckfile = self._path + line
+            self._decks.append(Deck(deckfile, collection))
 
     def name(self):
         return self._name

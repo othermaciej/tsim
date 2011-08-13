@@ -1,0 +1,32 @@
+This i a Tyrant combat simulator, designed to help identify strong decks for faction wars.
+
+To check out a read-only copy of this simulator:
+
+   git clone git://github.com/othermaciej/tsim.git
+
+To test a deck:
+
+   1) Make a .deck file (check out the ones in the decks subdirectory for examples)
+   2) To test as offense, run the following at the command prompt: 
+       ./tsim decks/YOUR_DECKFILE.deck "decks/Strong Defenses.deckpool"
+   3) To test as defense, run the follwing at a command prompt:
+       ./tsim "decks/Strong Offenses.deckpool" decks/YOUR_DECKFILE.deck 
+
+Full usage instructions:
+
+    usage: tsim [-h] [-s --surge-only] [-f --fight-only] [-r --rounds R]
+                [-l --logging]
+                OFF_DECK DEF_DECK
+
+    Simulate tyrant battles.
+
+    positional arguments:
+      OFF_DECK         offense deck or deck pool to test
+      DEF_DECK         defense deck or deck pool to test
+
+    optional arguments:
+      -h, --help       show this help message and exit
+      -s --surge-only  test only using Surge (default: test both Fight and Surge)
+      -f --fight-only  test only using Fight (default: test both Fight and Surge)
+      -r --rounds R    test each matchup for R rounds (default: 1000)
+      -l --logging     enable detailed combat logging

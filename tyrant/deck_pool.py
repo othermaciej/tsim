@@ -10,7 +10,6 @@ class DeckPool:
         self._name = re.sub(r"^.*/", "", self._name)
         self._path = re.sub(r"[^/]*$", "", file)
 
-        
         f = open(file)
 
         for line in f:

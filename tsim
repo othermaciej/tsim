@@ -9,14 +9,15 @@ from tyrant.deck_pool import DeckPool
 from tyrant.deck_versus_deck_test import DeckVersusDeckTest
 from tyrant.deck_versus_pool_test import DeckVersusPoolTest
 from tyrant.pool_versus_deck_test import PoolVersusDeckTest
+from tyrant.pool_versus_pool_test import PoolVersusPoolTest
 from tyrant.log import set_logging
 
 def process_arguments():
     parser = argparse.ArgumentParser(description='Simulate tyrant battles.')
     parser.add_argument('off_deck', metavar='OFF_DECK', type=str, nargs=1,
-                        help='offense deck to test')
+                        help='offense deck or deck pool to test')
     parser.add_argument('def_deck', metavar='DEF_DECK', type=str, nargs=1,
-                        help='defense deck to test')
+                        help='defense deck or deck pool to test')
     parser.add_argument('-s --surge-only', dest='surge_only', action='store_const',
                         const=True, default=False,
                         help='test only using Surge (default: test both Fight and Surge)')
@@ -25,10 +26,10 @@ def process_arguments():
                         help='test only using Fight (default: test both Fight and Surge)')
     parser.add_argument('-r --rounds', metavar='R', dest='rounds', type=int,
                         default=1000,
-                        help='test matchup for R rounds (default: 1000)')
+                        help='test each matchup for R rounds (default: 1000)')
     parser.add_argument('-l --logging', dest='logging', action='store_const',
                         const=True, default=False,
-                        help='test matchup for R rounds (default: 1000)')
+                        help='enable detailed combat logging')
 
     return parser.parse_args()
 
@@ -63,25 +64,29 @@ def main():
     print ""
     
     if offense_is_pool and defense_is_pool:
-        raise Exception("Bad parameters", "Offense and defense cannot both be deck pools")
+        test_kind = PoolVersusPoolTest
     elif offense_is_pool:
-        test_kind = PoolVersusDeckTest        
+        test_kind = PoolVersusDeckTest
     elif defense_is_pool:
         test_kind = DeckVersusPoolTest
     else:
         test_kind = DeckVersusDeckTest
         
     if not args.surge_only:
-        test = test_kind(offense, defense, False, args.rounds)
-        test.run()
-        test.print_results()
+        fight_test = test_kind(offense, defense, False, args.rounds)
+        fight_test.run()
+        fight_test.print_results()
 
     if not args.fight_only and not args.surge_only:
         print ""
 
     if not args.fight_only:
-        test = test_kind(offense, defense, True, args.rounds)
-        test.run()
-        test.print_results()
+        surge_test = test_kind(offense, defense, True, args.rounds)
+        surge_test.run()
+        surge_test.print_results()
+
+    if not args.fight_only and not args.surge_only and offense_is_pool and defense_is_pool:
+        print ""
+        fight_test.print_best_overall_defenses(surge_test)
 
 main()

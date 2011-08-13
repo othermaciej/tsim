@@ -7,8 +7,6 @@ class PoolVersusDeckTest:
         self._defense = defense
         self._surge = surge
         self._rounds = rounds
-        self._offense_wins = []
-        self._defense_wins = []
         self._tests = []
         
     def run(self):

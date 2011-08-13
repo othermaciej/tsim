@@ -1,0 +1,6 @@
+
+Make pool vs deck test show overall defense rating
+Fix deck names to not have spaces
+Optimize performance more (may need to rewrite in C++)
+Investigate discrepancies against other simulators (some may be bugs)
+Implement a simple AI player for offense

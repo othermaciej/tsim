@@ -56,7 +56,9 @@ true_names = {
     "InvasionCo" : "Invasion Coordinator",
     "InvCo" : "Invasion Coordinator",
     "IC" : "Invasion Coordinator",
-    "Demo Bot" : "Demolition Bot"
+    "Demo Bot" : "Demolition Bot",
+    "EM" : "Enforcer Mech",
+    "ComSat" : "ComSat Terminal"
     }
 
 preferred_aliases = {
@@ -94,7 +96,9 @@ preferred_aliases = {
     "Metalhead" : "MH",
     "T-46 Leonidas" : "Leo",
     "Invasion Coordinator" : "InvasionCo",
-    "Demolition Bot" : "Demo Bot"
+    "Demolition Bot" : "Demo Bot",
+    "Enforcer Mech" : "EM",
+    "ComSat Terminal" : "ComSat"
 }
 
 

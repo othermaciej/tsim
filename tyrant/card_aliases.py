@@ -58,7 +58,12 @@ true_names = {
     "IC" : "Invasion Coordinator",
     "Demo Bot" : "Demolition Bot",
     "EM" : "Enforcer Mech",
-    "ComSat" : "ComSat Terminal"
+    "EMech" : "Enforcer Mech",
+    "ComSat" : "ComSat Terminal",
+    "Overlord" : "Xeno Overlord",
+    "AS" : "Absorption Shield",
+    "AbsShield" : "Absorption Shield",
+    "TI" : "Tactical Infiltrator"
     }
 
 preferred_aliases = {
@@ -97,8 +102,10 @@ preferred_aliases = {
     "T-46 Leonidas" : "Leo",
     "Invasion Coordinator" : "InvasionCo",
     "Demolition Bot" : "Demo Bot",
-    "Enforcer Mech" : "EM",
-    "ComSat Terminal" : "ComSat"
+    "Enforcer Mech" : "EMech",
+    "ComSat Terminal" : "ComSat",
+    "Xeno Overlord" : "Overlord",
+    "Tactical Infiltrator" : "TI"
 }
 
 

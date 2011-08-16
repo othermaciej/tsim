@@ -7,8 +7,8 @@ class DeckPool:
     def __init__(self, file, collection):
         self._decks = []
         self._name = re.sub(r"\.deckpool$", "", file)
-        self._name = re.sub(r"^.*/", "", self._name)
-        self._path = re.sub(r"[^/]*$", "", file)
+        self._name = re.sub(r"^.*[/\\]", "", self._name)
+        self._path = re.sub(r"[^/\\]*$", "", file)
 
         f = open(file)
 

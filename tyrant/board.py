@@ -360,6 +360,7 @@ class Board:
             self.draw()
         if self._hand:
             self.play_from_hand(choice(self._hand))
+
         self.activate_cards(opposing_board)
         self.clean_up(opposing_board)
         return opposing_board.commander().is_dead()
@@ -373,3 +374,63 @@ class Board:
             self._active_structures.append(StructureCardInPlay(card_to_play))
         else:
             self._active_action = card_to_play
+
+    def log_as_offense(self):
+        self.log_front_row()
+        self.log_back_row()
+
+    def log_as_defense(self):
+        self.log_back_row()
+        self.log_front_row()
+
+    def log_front_row(self):
+        self.log_cards(self._active_assault_units)
+
+    def log_back_row(self):
+        back_row = [self._commander] + self._active_structures + ([self._active_action] if self._active_action else [])
+        self.log_cards(back_row)
+
+    def log_cards(self, card_list):
+        line = ""
+        for card in card_list:
+            line += "+----------+ "
+        print line;
+
+        line = ""
+        for card in card_list:
+            line += "|       ";
+            if card.type() == "action" or card.type() == "commander":
+                line += "  "
+            else:
+                line += "{0:>2}".format(card.delay())
+            line += " | "
+        print line;
+
+        line = ""
+        for card in card_list:
+            line += "|";
+            line += "{0: ^10.10}".format(card.name())
+            line += "| "
+        print line;
+
+        line = ""
+        for card in card_list:
+            line += "| ";
+            if card.type() == "assault":
+                line += "{0:<2}".format(card.attack())
+            else:
+                line += "  "
+
+            line += "    "
+            if card.type() == "action":
+                line += "  "
+            else:
+                line += "{0:>2}".format(card.health())
+            line += " | "
+        print line;
+
+
+        line = ""
+        for card in card_list:
+            line += "+----------+ "
+        print line;

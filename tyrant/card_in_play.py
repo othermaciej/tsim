@@ -14,6 +14,9 @@ class CardInPlay:
         self._card = card
         self._cur_health = card.health()
 
+    def name(self):
+        return self._card.name()
+
     def type(self):
         return self._card._type
 

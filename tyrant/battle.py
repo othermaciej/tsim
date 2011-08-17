@@ -24,6 +24,10 @@ class Battle:
                 if log_enabled(): log("Turn " + str(turn) + " | DEFENSE plays ------------------------")
                 commander_killed = self._defense_board.play_random_turn(self._offense_board)
             turn += 1
+            if log_enabled():
+                self._defense_board.log_as_defense()
+                self._offense_board.log_as_offense()
+
         if log_enabled():
             if commander_killed and self.is_offense_turn(turn - 1):
                 log("OFFENSE wins")
